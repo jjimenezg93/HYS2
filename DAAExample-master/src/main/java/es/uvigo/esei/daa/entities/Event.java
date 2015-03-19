@@ -9,19 +9,21 @@ public class Event {
 	private Timestamp fechaFin;
 	private String descripcion;
 	private String categoria;
+	private String nombre;
 	
 	
 	public Event(){
 	
 	}
 	
-	public Event(int id, Timestamp fechaCreacion, Timestamp fechaInicio, Timestamp fechaFin, String descripcion, String categoria){
+	public Event(int id,String nombre, Timestamp fechaCreacion, Timestamp fechaInicio, Timestamp fechaFin, String descripcion, String categoria){
 		this.id = id; 
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.fechaCreacion = fechaCreacion;
 		this.descripcion = descripcion;
 		this.categoria = categoria;
+		this.nombre= nombre;
 		
 	}
 
@@ -83,6 +85,14 @@ public class Event {
 
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package es.uvigo.esei.daa.rest;
 
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.sun.jna.platform.win32.Sspi.TimeStamp;
 
 import es.uvigo.esei.daa.dao.DAOException;
 import es.uvigo.esei.daa.dao.EventDAO;
@@ -85,10 +88,14 @@ public class EventResource {
 	public Response modify(
 		@PathParam("id") int id, 
 		@FormParam("name") String name, 
-		@FormParam("surname") String surname
+		@FormParam("surname") Timestamp fechaCreacion,
+		@FormParam("surname") Timestamp fechaInicio,
+		@FormParam("surname") Timestamp fechaFin,
+		@FormParam("surname") String descripcion,
+		@FormParam("surname") String categoria
 	) {
 		try {
-			return Response.ok(this.dao.modify(id, name, surname)).build();
+			return Response.ok(this.dao.modify(id,name,fechaCreacion, fechaInicio,fechaFin, descripcion,categoria)).build();
 		} catch (IllegalArgumentException iae) {
 			LOG.log(Level.FINE, "Invalid person id in modify method", iae);
 			return Response.status(Response.Status.BAD_REQUEST)
@@ -101,11 +108,16 @@ public class EventResource {
 	
 	@POST
 	public Response add(
-		@FormParam("name") String name, 
-		@FormParam("surname") String surname
+			@PathParam("id") int id, 
+			@FormParam("name") String name, 
+			@FormParam("surname") Timestamp fechaCreacion,
+			@FormParam("surname") Timestamp fechaInicio,
+			@FormParam("surname") Timestamp fechaFin,
+			@FormParam("surname") String descripcion,
+			@FormParam("surname") String categoria
 	) {
 		try {
-			return Response.ok(this.dao.add(name, surname)).build();
+			return Response.ok(this.dao.add(id,name,fechaCreacion, fechaInicio,fechaFin, descripcion,categoria)).build();
 		} catch (IllegalArgumentException iae) {
 			LOG.log(Level.FINE, "Invalid person id in add method", iae);
 			return Response.status(Response.Status.BAD_REQUEST)
