@@ -15,21 +15,22 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.uvigo.esei.daa.dao.DAOException;
-import es.uvigo.esei.daa.dao.PeopleDAO;
+import es.uvigo.esei.daa.dao.EventDAO;
+import es.uvigo.esei.daa.dao.EventDAO;
 
-@Path("/people")
+@Path("/event")
 @Produces(MediaType.APPLICATION_JSON)
-public class PeopleResource {
-	private final static Logger LOG = Logger.getLogger("PeopleResource");
+public class EventResource {
+	private final static Logger LOG = Logger.getLogger("EventResource");
 	
-	private final PeopleDAO dao;
+	private final EventDAO dao;
 	
-	public PeopleResource() {
-		this(new PeopleDAO());
+	public EventResource() {
+		this(new EventDAO());
 	}
 	
 	// For testing purposes
-	PeopleResource(PeopleDAO dao) {
+	EventResource(EventDAO dao) {
 		this.dao = dao;
 	}
 
@@ -38,7 +39,7 @@ public class PeopleResource {
 		try {
 			return Response.ok(this.dao.list()).build();
 		} catch (DAOException e) {
-			LOG.log(Level.SEVERE, "Error listing people", e);
+			LOG.log(Level.SEVERE, "Error listing Event", e);
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
