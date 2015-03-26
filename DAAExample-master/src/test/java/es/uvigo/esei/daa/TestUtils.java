@@ -53,8 +53,9 @@ public final class TestUtils {
 	
 	public static void clearTestDatabase() throws SQLException {
 		final String queries = new StringBuilder()
-			.append("DELETE FROM `people`;")
+			.append("DELETE FROM `event`;")
 			.append("DELETE FROM `users`;")
+			.append("DELETE FROM `eventUsers`;")
 		.toString();
 
 		final DataSource ds = createTestingDataSource();
@@ -67,20 +68,12 @@ public final class TestUtils {
 	
 	public static void initTestDatabase() throws SQLException {
 		final String queries = new StringBuilder()
-			.append("ALTER TABLE `people` AUTO_INCREMENT = 1;")
 			.append("ALTER TABLE `users` AUTO_INCREMENT = 1;")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Antón', 'Álvarez');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Ana', 'Amargo');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Manuel', 'Martínez');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'María', 'Márquez');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Lorenzo', 'López');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Laura', 'Laredo');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Perico', 'Palotes');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Patricia', 'Pérez');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Juan', 'Jiménez');")
-			.append("INSERT INTO `people` (`id`,`name`,`surname`) VALUES (0, 'Julia', 'Justa');")
-			.append("INSERT INTO `users` (`login`,`password`) VALUES ('mrjato', '59189332a4abf8ddf66fde068cad09eb563b4bd974f7663d97ff6852a7910a73');")
-		.toString();
+			.append("INSERT INTO `daaexample`.`event` (`id`,`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES ('vamos de parranda','2015-07-15 13:30:00','2015-08-15 13:30:00','2015-08-15 15:30:00','vamos a comer una parrillada','parranda')")
+			.append("INSERT INTO `daaexample`.`users` (`login`,`password`,`name`,`surname`) VALUES ('logon','bitch','hiper','bitch');")
+			.append("INSERT INTO `daaexample`.`event` (`id`,`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES ('club de lectura','2015-06-03 16:30:00','2015-06-03 16:30:00','2015-06-15 18:30:00','hablaremos sobre algun libro','parranda');")
+			.append("INSERT INTO `daaexample`.`eventUser` (`id`,`login`) VALUES (1,'logon');")
+			.toString();
 
 		final DataSource ds = createTestingDataSource();
 		try (Connection connection = ds.getConnection()) {
