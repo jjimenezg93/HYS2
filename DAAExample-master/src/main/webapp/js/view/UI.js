@@ -1,18 +1,22 @@
+//Event evento = new Event(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category);
+var tiempo = Date.now();
+
 function insertDetailedEvent(parent) {
 	parent.append('<!-- Features Section -->\
         <div class="row">\
             <div class="col-lg-12">\
-                <h2 class="page-header">AQUI IRIA EL NOMBRE DEL EVENTO</h2>\
+                <h2 class="page-header">AQUI IRIA EL NOMBRE DEL EVENTO' +tiempo.getTime()+ '</h2>\
             </div>\
             <div class="col-md-6">\
                 <ul>\
+					<li><strong>Categoría: </strong><a href="#">COSAAAAAAA</a></li>\
 					<li><strong>Creador: </strong><a href="#">pepito</a></li>\
                     <li><strong>Fecha: </strong>AQUI IRIA LA FECHA</li>\
                     <li><strong>Tiempo restante: </strong>AQUI VA EL TIEMPO RESTANTE</li>\
                     <li><strong>Participantes: </strong>AQUI VA EL NUMERO DE PARTICIPANTES</li>\
                 </ul>\
                 <p>The Modern Business template by Start Bootstrap includes:\
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>\
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>\
             </div>\
             <div class="col-md-4 .col-md-offset-4">\
                 <img class="img-responsive" src="http://placehold.it/700x450" alt="">\
