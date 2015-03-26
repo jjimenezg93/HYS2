@@ -15,7 +15,7 @@ import es.uvigo.esei.daa.entities.Event;
 import es.uvigo.esei.daa.entities.Person;
 
 public class EventDAO extends DAO {
-	private final static Logger LOG = Logger.getLogger("EventDAO");
+	private final static Logger LOG = Logger.getLogger("PeopleDAO");
 	
 	public Event get(int id)
 	throws DAOException, IllegalArgumentException {
@@ -29,12 +29,12 @@ public class EventDAO extends DAO {
 					if (result.next()) {
 						return new Event(
 								result.getInt("id"),
-								result.getString("nameEvent"),
-								result.getTimestamp("dateCreate"),
-								result.getTimestamp("dateInit"),
-								result.getTimestamp("dateFinal"),
-								result.getString("description"),
-								result.getString("category")
+								result.getString("nombre"),
+								result.getTimestamp("fechaCreacion"),
+								result.getTimestamp("fechaInicio"),
+								result.getTimestamp("fechaFin"),
+								result.getString("descripcion"),
+								result.getString("categoria")
 						);
 					} else {
 						throw new IllegalArgumentException("Invalid id");
@@ -54,15 +54,16 @@ public class EventDAO extends DAO {
 			try (final PreparedStatement statement = conn.prepareStatement(query)) {
 				try (final ResultSet result = statement.executeQuery()) {
 					final List<Event> events = new LinkedList<>();
+//////Cambiar los tags a los atributos cuando este la BD
 					while (result.next()) {
 						events.add(new Event(
-								result.getInt("id"),
-								result.getString("nameEvent"),
-								result.getTimestamp("dateCreate"),
-								result.getTimestamp("dateInit"),
-								result.getTimestamp("dateFinal"),
-								result.getString("description"),
-								result.getString("category")
+							result.getInt("id"),
+							result.getString("nombre"),
+							result.getTimestamp("fechaCreacion"),
+							result.getTimestamp("fechaInicio"),
+							result.getTimestamp("fechaFin"),
+							result.getString("descripcion"),
+							result.getString("categoria")
 						));
 					}
 					
@@ -93,9 +94,9 @@ public class EventDAO extends DAO {
 		}
 	}
 	
-	public Event modify(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category)
+	public Event modify(int id,String nombre, Timestamp fechaCreacion, Timestamp fechaInicio, Timestamp fechaFin, String descripcion, String categoria)
 	throws DAOException, IllegalArgumentException {
-		if (  nameEvent == null) {
+		if (  nombre == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
 		
@@ -104,15 +105,15 @@ public class EventDAO extends DAO {
 			final String query = "UPDATE event SET name=?, surname=? WHERE id=?";
 			
 			try (PreparedStatement statement = conn.prepareStatement(query)) {
-				statement.setString(1, nameEvent);
-				statement.setString(2, dateCreate.toString());
-				statement.setString(3, dateInit.toString());
-				statement.setString(4, dateFinal.toString());
-				statement.setString(5, description);
-				statement.setString(6, category);
+				statement.setString(1, nombre);
+				statement.setString(2, fechaCreacion.toString());
+				statement.setString(3, fechaInicio.toString());
+				statement.setString(4, fechaFin.toString());
+				statement.setString(5, descripcion);
+				statement.setString(6, categoria);
 				
 				if (statement.executeUpdate() == 1) {
-					return new Event(id, nameEvent, dateCreate,dateInit,dateFinal,description,category);
+					return new Event(id, nombre, fechaCreacion,fechaInicio,fechaFin,descripcion,categoria);
 				} else {
 					throw new IllegalArgumentException("id and name cannot be null");
 				}
@@ -123,9 +124,9 @@ public class EventDAO extends DAO {
 		}
 	}
 	
-	public Event add(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category)
+	public Event add(int id,String nombre, Timestamp fechaCreacion, Timestamp fechaInicio, Timestamp fechaFin, String descripcion, String categoria)
 	throws DAOException, IllegalArgumentException {
-		if (nameEvent == null) {
+		if (nombre == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
 		
@@ -134,17 +135,17 @@ public class EventDAO extends DAO {
 			
 			try (PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 				///Comprobar que los tostring de los timestampo funcionen
-				statement.setString(1, nameEvent);
-				statement.setString(2, dateCreate.toString());
-				statement.setString(3, dateInit.toString());
-				statement.setString(4, dateFinal.toString());
-				statement.setString(5, description);
-				statement.setString(6, category);
+				statement.setString(1, nombre);
+				statement.setString(2, fechaCreacion.toString());
+				statement.setString(3, fechaInicio.toString());
+				statement.setString(4, fechaFin.toString());
+				statement.setString(5, descripcion);
+				statement.setString(6, categoria);
 				
 				if (statement.executeUpdate() == 1) {
 					try (ResultSet resultKeys = statement.getGeneratedKeys()) {
 						if (resultKeys.next()) {
-							return new Event(resultKeys.getInt(1), nameEvent, dateCreate,dateInit,dateFinal,description,category);
+							return new Event(resultKeys.getInt(1), nombre, fechaCreacion,fechaInicio,fechaFin,descripcion,categoria);
 						} else {
 							LOG.log(Level.SEVERE, "Error retrieving inserted id");
 							throw new SQLException("Error retrieving inserted id");
