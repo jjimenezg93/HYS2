@@ -116,7 +116,89 @@ public class EventResourceTest extends JerseyTest {
 	@Test
 	public void testAddMissingName() throws IOException {
 		final Form form = new Form();
+		form.param("dateCreate", "2015-07-15 13:30:00");
+		form.param("dateInit", "2015-08-15 13:30:00");
+		form.param("dateFinal", "2015-08-15 15:30:00");
+		form.param("description", "vamos a comer una parrillada");
+		form.param("category", "parranda");
+		
+		final Response response = target("event")
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		
+		assertBadRequestStatus(response);
+	}
+	
+
+	@Test
+	public void testAddMissingDateCreate() throws IOException {
+		final Form form = new Form();
 		form.param("nameEvent", "vamos de parranda");
+		form.param("dateInit", "2015-08-15 13:30:00");
+		form.param("dateFinal", "2015-08-15 15:30:00");
+		form.param("description", "vamos a comer una parrillada");
+		form.param("category", "parranda");
+		
+		final Response response = target("event")
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		
+		assertBadRequestStatus(response);
+	}
+	
+	@Test
+	public void testAddMissingDateInit() throws IOException {
+		final Form form = new Form();
+		form.param("nameEvent", "vamos de parranda");
+		form.param("dateCreate", "2015-07-15 13:30:00");
+		form.param("dateFinal", "2015-08-15 15:30:00");
+		form.param("description", "vamos a comer una parrillada");
+		form.param("category", "parranda");
+		
+		final Response response = target("event")
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		
+		assertBadRequestStatus(response);
+	}
+	@Test
+	public void testAddMissingDateFinal() throws IOException {
+		final Form form = new Form();
+		form.param("nameEvent", "vamos de parranda");
+		form.param("dateCreate", "2015-07-15 13:30:00");
+		form.param("dateInit", "2015-08-15 13:30:00");
+		form.param("description", "vamos a comer una parrillada");
+		form.param("category", "parranda");
+		
+		final Response response = target("event")
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		
+		assertBadRequestStatus(response);
+	}
+	@Test
+	public void testAddMissingDescription() throws IOException {
+		final Form form = new Form();
+		form.param("nameEvent", "vamos de parranda");
+		form.param("dateCreate", "2015-07-15 13:30:00");
+		form.param("dateInit", "2015-08-15 13:30:00");
+		form.param("dateFinal", "2015-08-15 15:30:00");
+		form.param("category", "parranda");
+		
+		final Response response = target("event")
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+		
+		assertBadRequestStatus(response);
+	}
+	@Test
+	public void testAddMissingCategory() throws IOException {
+		final Form form = new Form();
+		form.param("nameEvent", "vamos de parranda");
+		form.param("dateCreate", "2015-07-15 13:30:00");
+		form.param("dateInit", "2015-08-15 13:30:00");
+		form.param("dateFinal", "2015-08-15 15:30:00");
+		form.param("description", "vamos a comer una parrillada");
 		
 		final Response response = target("event")
 			.request(MediaType.APPLICATION_JSON_TYPE)
@@ -126,65 +208,42 @@ public class EventResourceTest extends JerseyTest {
 	}
 
 	@Test
-	public void testAddMissingSurname() throws IOException {
-		final Form form = new Form();
-		form.param("name", "Xoel");
-		
-		final Response response = target("people")
-			.request(MediaType.APPLICATION_JSON_TYPE)
-			.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
-		
-		assertBadRequestStatus(response);
-	}
-
-	@Test
 	public void testModify() throws IOException {
 		final Form form = new Form();
-		form.param("name", "Marta");
-		form.param("surname", "Méndez");
-		
-		final Response response = target("people/4")
+		form.param("nameEvent", "vamos de parrand");
+		form.param("dateCreate", "2015-07-15 13:20:00");
+		form.param("dateInit", "2015-08-15 15:30:00");
+		form.param("dateFinal", "2015-08-15 16:30:00");
+		form.param("description", "vamos a comer una parrillad");
+		form.param("category", "musica");
+		//Acordarse de la id del evento si hay un fallo
+		final Response response = target("event/1")
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 		assertOkStatus(response);
 		
-		final Person person = response.readEntity(Person.class);
-		assertEquals(4, person.getId());
-		assertEquals("Marta", person.getName());
-		assertEquals("Méndez", person.getSurname());
+		final Event event = response.readEntity(Event.class);
+		assertEquals(1, event.getId());
+		assertEquals("vamos de parrand", event.getNameEvent());
+		assertEquals("2015-07-15 13:20:00", event.getDateCreate());
+		assertEquals("2015-08-15 15:30:00", event.getDateInit());
+		assertEquals("2015-08-15 16:30:00", event.getDateFinal());
+		assertEquals("vamos a comer una parrillad", event.getDescription());
+		assertEquals("musica", event.getCategory());
 	}
 
-	@Test
-	public void testModifyName() throws IOException {
-		final Form form = new Form();
-		form.param("name", "Marta");
-		
-		final Response response = target("people/4")
-			.request(MediaType.APPLICATION_JSON_TYPE)
-			.put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
-
-		assertBadRequestStatus(response);
-	}
-
-	@Test
-	public void testModifySurname() throws IOException {
-		final Form form = new Form();
-		form.param("surname", "Méndez");
-		
-		final Response response = target("people/4")
-			.request(MediaType.APPLICATION_JSON_TYPE)
-			.put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
-		
-		assertBadRequestStatus(response);
-	}
-
+	
 	@Test
 	public void testModifyInvalidId() throws IOException {
 		final Form form = new Form();
-		form.param("name", "Marta");
-		form.param("surname", "Méndez");
+		form.param("nameEvent", "vamos de parrand");
+		form.param("dateCreate", "2015-07-15 13:20:00");
+		form.param("dateInit", "2015-08-15 15:30:00");
+		form.param("dateFinal", "2015-08-15 16:30:00");
+		form.param("description", "vamos a comer una parrillad");
+		form.param("category", "musica");
 		
-		final Response response = target("people/100")
+		final Response response = target("event/100")
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
@@ -193,14 +252,14 @@ public class EventResourceTest extends JerseyTest {
 
 	@Test
 	public void testDelete() throws IOException {
-		final Response response = target("people/4").request().delete();
+		final Response response = target("event/1").request().delete();
 		assertOkStatus(response);
 		
-		assertEquals(4, (int) response.readEntity(Integer.class));
+		assertEquals(1, (int) response.readEntity(Integer.class));
 	}
 
 	@Test
 	public void testDeleteInvalidId() throws IOException {
-		assertBadRequestStatus(target("people/100").request().delete());
+		assertBadRequestStatus(target("event/100").request().delete());
 	}
 }

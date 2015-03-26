@@ -33,7 +33,7 @@ public class PeopleWebTest {
 	public void setUp() throws Exception {
 		TestUtils.initTestDatabase();
 		
-		final String baseUrl = "http://localhost:9080/DAAExample/";
+		final String baseUrl = "http://localhost:9080/HYS2/";
 		
 		driver = new FirefoxDriver();
 		driver.get(baseUrl);
