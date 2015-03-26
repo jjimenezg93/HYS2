@@ -1,98 +1,86 @@
 package es.uvigo.esei.daa.entities;
 import java.sql.Timestamp;
-import java.util.Date;
 public class Event {
 	
 	private int id;
-	private Timestamp fechaCreacion;
-	private Timestamp fechaInicio;
-	private Timestamp fechaFin;
-	private String descripcion;
-	private String categoria;
-	private String nombre;
+	private String nameEvent;
+	private Timestamp dateCreate;
+	private Timestamp dateInit;
+	private Timestamp dateFinal;
+	private String description;
+	private String category;
 	
 	
 	public Event(){
 	
 	}
 	
-	public Event(int id,String nombre, Timestamp fechaCreacion, Timestamp fechaInicio, Timestamp fechaFin, String descripcion, String categoria){
-		this.id = id; 
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
-		this.fechaCreacion = fechaCreacion;
-		this.descripcion = descripcion;
-		this.categoria = categoria;
-		this.nombre= nombre;
+	public Event(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category){
+		this.setId(id); 
+		this.setDateCreate(dateCreate);
+		this.setDateInit(dateInit);
+		this.setDateFinal(dateFinal);
+		this.setDescription(description);
+		this.setCategory(category);
+		this.setNameEvent(nameEvent);
 		
 	}
 
-
-	public String getCategoria() {
-		return categoria;
+	public String getCategory() {
+		return category;
 	}
 
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-
-	public Timestamp getFechaFin() {
-		return fechaFin;
-	}
-
-
-	public void setFechaFin(Timestamp fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
-
-	public Timestamp getFechaInicio() {
-		return fechaInicio;
-	}
-
-
-	public void setFechaInicio(Timestamp fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public String getNameEvent() {
+		return nameEvent;
+	}
 
-	public Timestamp getFechaCreacion() {
-		return fechaCreacion;
+	public void setNameEvent(String nameEvent) {
+		this.nameEvent = nameEvent;
+	}
+
+	public Timestamp getDateCreate() {
+		return dateCreate;
+	}
+
+	public void setDateCreate(Timestamp dateCreate) {
+		this.dateCreate = dateCreate;
+	}
+
+	public Timestamp getDateInit() {
+		return dateInit;
+	}
+
+	public void setDateInit(Timestamp dateInit) {
+		this.dateInit = dateInit;
+	}
+
+	public Timestamp getDateFinal() {
+		return dateFinal;
+	}
+
+	public void setDateFinal(Timestamp dateFinal) {
+		this.dateFinal = dateFinal;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 
-	public void setFechaCreacion(Timestamp fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
 }

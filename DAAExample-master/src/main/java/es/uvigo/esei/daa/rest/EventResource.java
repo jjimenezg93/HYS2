@@ -14,11 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.sun.jna.platform.win32.Sspi.TimeStamp;
-
 import es.uvigo.esei.daa.dao.DAOException;
-import es.uvigo.esei.daa.dao.EventDAO;
 import es.uvigo.esei.daa.dao.EventDAO;
 
 @Path("/event")
@@ -87,21 +83,21 @@ public class EventResource {
 	@Path("/{id}")
 	public Response modify(
 		@PathParam("id") int id, 
-		@FormParam("name") String name, 
-		@FormParam("surname") Timestamp fechaCreacion,
-		@FormParam("surname") Timestamp fechaInicio,
-		@FormParam("surname") Timestamp fechaFin,
-		@FormParam("surname") String descripcion,
-		@FormParam("surname") String categoria
+		@FormParam("nameEvent") String nameEvent, 
+		@FormParam("dateCreate") Timestamp dateCreate,
+		@FormParam("dateInit") Timestamp dateInit,
+		@FormParam("dateFinal") Timestamp dateFinal,
+		@FormParam("description") String description,
+		@FormParam("category") String category
 	) {
 		try {
-			return Response.ok(this.dao.modify(id,name,fechaCreacion, fechaInicio,fechaFin, descripcion,categoria)).build();
+			return Response.ok(this.dao.modify(id,nameEvent,dateCreate, dateInit,dateFinal, description,category)).build();
 		} catch (IllegalArgumentException iae) {
-			LOG.log(Level.FINE, "Invalid person id in modify method", iae);
+			LOG.log(Level.FINE, "Invalid event id in modify method", iae);
 			return Response.status(Response.Status.BAD_REQUEST)
 				.entity(iae.getMessage()).build();
 		} catch (DAOException e) {
-			LOG.log(Level.SEVERE, "Error modifying a person", e);
+			LOG.log(Level.SEVERE, "Error modifying a event", e);
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
@@ -109,21 +105,21 @@ public class EventResource {
 	@POST
 	public Response add(
 			@PathParam("id") int id, 
-			@FormParam("name") String name, 
-			@FormParam("surname") Timestamp fechaCreacion,
-			@FormParam("surname") Timestamp fechaInicio,
-			@FormParam("surname") Timestamp fechaFin,
-			@FormParam("surname") String descripcion,
-			@FormParam("surname") String categoria
+			@FormParam("nameEvent") String nameEvent, 
+			@FormParam("dateCreate") Timestamp dateCreate,
+			@FormParam("dateInit") Timestamp dateInit,
+			@FormParam("dateFinal") Timestamp dateFinal,
+			@FormParam("description") String description,
+			@FormParam("category") String category
 	) {
 		try {
-			return Response.ok(this.dao.add(id,name,fechaCreacion, fechaInicio,fechaFin, descripcion,categoria)).build();
+			return Response.ok(this.dao.add(id,nameEvent,dateCreate, dateInit,dateFinal, description,category)).build();
 		} catch (IllegalArgumentException iae) {
-			LOG.log(Level.FINE, "Invalid person id in add method", iae);
+			LOG.log(Level.FINE, "Invalid event id in add method", iae);
 			return Response.status(Response.Status.BAD_REQUEST)
 				.entity(iae.getMessage()).build();
 		} catch (DAOException e) {
-			LOG.log(Level.SEVERE, "Error adding a person", e);
+			LOG.log(Level.SEVERE, "Error adding a event", e);
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
