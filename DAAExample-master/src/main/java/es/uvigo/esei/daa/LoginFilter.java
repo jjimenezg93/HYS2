@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 			if (isLogoutPath(httpRequest)) {
 				removeTokenCookie(httpResponse);
 				redirectToIndex(httpRequest, httpResponse);
-			} else if (isIndexPath(httpRequest) || checkToken(httpRequest)) {
+			} else if (isIndexPath(httpRequest) || isCssPath(httpRequest) || isFontPath(httpRequest) || isJsPath(httpRequest) || checkToken(httpRequest)) {
 				chain.doFilter(request, response);
 			} else if (checkLogin(httpRequest, httpResponse)) {
 				continueWithRedirect(httpRequest, httpResponse);
@@ -56,8 +56,20 @@ public class LoginFilter implements Filter {
 		return request.getServletPath().equals("/index.html");
 	}
 	
+	private boolean isCssPath(HttpServletRequest request) {
+		return request.getServletPath().startsWith("/css");
+	}
+	
+	private boolean isJsPath(HttpServletRequest request) {
+		return request.getServletPath().startsWith("/js");
+	}
+	
 	private boolean isRestPath(HttpServletRequest request) {
 		return request.getServletPath().startsWith("/rest");
+	}
+	
+	private boolean isFontPath(HttpServletRequest request) {
+		return request.getServletPath().startsWith("/font-awesome");
 	}
 
 	private void redirectToIndex(
