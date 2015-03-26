@@ -14,14 +14,60 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
-	<div id="topMenu">
-	</div>
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href="index.html">Inicio</a>
+	            </div>
+			
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li>
+	                        <a href="about.html">About</a>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Pages <b class="caret"></b></a>
+	                        <ul class="dropdown-menu">
+	                            <li>
+	                                <a href="full-width.html">Full Width Page</a>
+	                            </li>
+	                            <li>
+	                                <a href="sidebar.html">Sidebar Page</a>
+	                            </li>
+	                            <li>
+	                                <a href="faq.html">FAQ</a>
+	                            </li>
+	                            <li>
+	                                <a href="404.html">404</a>
+	                            </li>
+	                            <li>
+	                                <a href="pricing.html">Pricing Table</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container -->
+	    </nav>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.js"></script>
 	<script type="text/javascript" src="js/view/UI.js"></script>
+	<div id="Content">
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			insertMenuTop($('#topMenu'));
+			insertRecommended($('#Content'));
+			insertDetailedEvent($('#Content'))
 		});
 	</script>
 	<form action="main.html" method="POST">
@@ -29,5 +75,6 @@
 		<div>Password: <input name="password" type="password"/></div>
 		<div><input type="submit" value="Login"/></div>
 	</form>
+	</div>
 </body>
 </html>
