@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +49,7 @@ public class EventDAO extends DAO {
 		}
 	}
 	
-	public List<Event> list() throws DAOException {
+	/*public List<Event> list() throws DAOException {
 		try (final Connection conn = this.getConnection()) {
 			final String query = "SELECT * FROM event";
 			
@@ -72,7 +75,68 @@ public class EventDAO extends DAO {
 			LOG.log(Level.SEVERE, "Error listing events", e);
 			throw new DAOException(e);
 		}
+	}*/
+	
+	
+	public List<Event> listRecomended(String login) throws DAOException {
+		final Map<String,Integer> mapaCategorias = new HashMap();
+		try (final Connection conn = this.getConnection()) {
+			final String eventosUser = "SELECT event.category FROM eventUser,event where event.id == eventUser.id ";
+			
+			try (final PreparedStatement statement = conn.prepareStatement(eventosUser)) {
+				try (final ResultSet result = statement.executeQuery()) {
+					while (result.next()) {
+							if (!mapaCategorias.containsKey(result.getString("category"))){
+								mapaCategorias.put(result.getString("category"), 1);	
+							}else{
+								mapaCategorias.replace(result.getString("category"), mapaCategorias.get(result.getString("category"))+1);
+							}
+					}
+			/*
+			 * 
+			 * acabar de hacer la funcion para ordenar los eventos
+			 */
+					for (Map.Entry<String, Integer> entry : mapaCategorias.entrySet()) {
+					    
+					}
+					
+				}
+			}
+
+			
+			try (final PreparedStatement statement = conn.prepareStatement(eventosUser)) {
+				try (final ResultSet result = statement.executeQuery()) {
+					final List<Event> events = new LinkedList<>();
+					while (result.next()) {
+						events.add(new Event(
+								result.getInt("id"),
+								result.getString("nameEvent"),
+								result.getTimestamp("dateCreate"),
+								result.getTimestamp("dateInit"),
+								result.getTimestamp("dateFinal"),
+								result.getString("description"),
+								result.getString("category")
+						));
+					}
+					
+					return events;
+				}
+			}
+		} catch (SQLException e) {
+			LOG.log(Level.SEVERE, "Error listing events", e);
+			throw new DAOException(e);
+		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void delete(int id)
 	throws DAOException, IllegalArgumentException {

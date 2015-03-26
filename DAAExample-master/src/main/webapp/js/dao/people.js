@@ -4,7 +4,7 @@ function listPeople(done, fail, always) {
 	always = typeof always !== 'undefined' ? always : function() {};
 	
 	$.ajax({
-		url: 'rest/people',
+		url: 'rest/people' ,
 		type: 'GET'
 	})
 	.done(done)
