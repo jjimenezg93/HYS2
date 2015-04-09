@@ -5,7 +5,7 @@ function listEvent(login,done, fail, always) {
 	always = typeof always !== 'undefined' ? always : function() {};
 	
 	$.ajax({
-		url: 'rest/event' + login,
+		url: 'rest/event/' + login,
 		type: 'GET'
 	})
 	.done(done)

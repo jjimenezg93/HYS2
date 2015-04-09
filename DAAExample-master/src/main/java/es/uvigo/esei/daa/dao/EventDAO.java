@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -63,7 +65,7 @@ public class EventDAO extends DAO {
 	 * "Error listing events", e); throw new DAOException(e); } }
 	 */
 	//mcpaz y adri
-	public Event[] listRecomended(String login) throws DAOException {
+	public List<Event> listRecomended(String login) throws DAOException {
 		final SortedMap<String, Integer> mapaCategorias = new TreeMap();//sortedMap devielve un mapa ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser,event where event.id = eventUser.id; ";
@@ -86,7 +88,7 @@ public class EventDAO extends DAO {
 					
 					Iterator<String> iterator = mapaCategorias.keySet()
 							.iterator();
-					final Event[] events = new Event[10];
+					final List<Event> events = new LinkedList<>();
 					while (iterator.hasNext()) {
 						String key = (String) iterator.next();
 						final String eventoRecomen = "SELECT * FROM event where category =  "
@@ -95,16 +97,16 @@ public class EventDAO extends DAO {
 						try (final PreparedStatement stat = conn
 								.prepareStatement(eventoRecomen)) {
 							try (final ResultSet res = stat.executeQuery()) {
-								int i=0;//esto es una xapuza para devolver el array que tanto quieren
+								
 								while (res.next()) {
-									events[i]=(new Event(res.getInt("id"), res
+									events.add(new Event(res.getInt("id"), res
 											.getString("nameEvent"), res
 											.getTimestamp("dateCreate"), res
 											.getTimestamp("dateInit"), res
 											.getTimestamp("dateFinal"), res
 											.getString("description"), res
 											.getString("category")));
-										i++;
+				
 								}
 
 							}
