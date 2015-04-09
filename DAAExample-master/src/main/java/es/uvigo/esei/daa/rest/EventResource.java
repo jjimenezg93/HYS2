@@ -34,7 +34,7 @@ public class EventResource {
 	}
 
 
-	
+	//mcpaz y adri
 	@GET
 	@Path("/{id}")
 	public Response listRecomended(@PathParam("login") String login) {
