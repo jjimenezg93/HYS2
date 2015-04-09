@@ -1,12 +1,13 @@
 function init(parent){
+	
 	listEvent("logon",function(events){
-		$.each(events, function(key, event) {
-			insertDetailedEvent(parent,event);
-		});
+		
+		insertDetailedEvent(parent,events[0]);
 		
 	},function(){},function(){});
 	
 	modificarDetailed("hola");
+
 	
 }
 
@@ -14,7 +15,7 @@ function modificarDetailed(event){
 	
 	var cosa= $("#detailed");
 
-	cosa.find('[name="hola"]').val("huehuheuheuhuehueuh");
+	//cosa.find('input[name="category"]').val("huehuheuheuhuehueuh");
 	
 	
 }
@@ -23,25 +24,27 @@ function modificarDetailed(event){
 function insertDetailedEvent(parent,event) {
 
 	parent.append('<!-- Features Section -->\
-        <div class="row">\
+        <div class="row"> <form id="' + "detailedform" + '">\
             <div class="col-lg-12">\
                 <h2 class="page-header">'+ event.nameEvent+'</h2>\
             </div>\
-            <div id="detailed" class="col-md-6">\
+           <div class="col-md-6">\
                 <ul>\
-					<li><strong>Categoría: </strong><div value="' + event.category + '"</div><a href="#"></a></li>\
-					<li><strong>Creador: </strong>'+event.category+'<a href="#"></a></li>\
+					<li><strong>Categoría: </strong><input name="category" readonly value="'+event.category+'" /><a href="#"></a></li>\
+					<li><strong>Creador: </strong>'+"placeholder"+'<a href="#"></a></li>\
                     <li><strong>Fecha de Inicio: </strong>'+event.dateInit+'</li>\
                     <li><strong>Tiempo restante: </strong>'+"huehuehue"+'</li>\
                     <li><strong>Participantes: </strong>'+"asdasdasd"+'</li>\
                 </ul>\
                 <p>'+event.description+'</p>\
+        		</form>\
             </div>\
             <div class="col-md-4 .col-md-offset-4">\
                 <img class="img-responsive" src="http://placehold.it/700x450" alt="">\
             </div>\
         </div>\
         <!-- /.row -->')
+        
 }
 
 function insertRecommended(parent) {
