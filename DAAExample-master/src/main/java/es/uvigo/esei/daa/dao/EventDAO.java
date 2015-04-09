@@ -89,8 +89,8 @@ public class EventDAO extends DAO {
 					final Event[] events = new Event[10];
 					while (iterator.hasNext()) {
 						String key = (String) iterator.next();
-						final String eventoRecomen = "SELECT * FROM event where category =  "
-								+ "'" + key + "'";
+						final String eventoRecomen = "SELECT * FROM event where nameEvent =  "
+								+ key;
 
 						try (final PreparedStatement stat = conn
 								.prepareStatement(eventoRecomen)) {
