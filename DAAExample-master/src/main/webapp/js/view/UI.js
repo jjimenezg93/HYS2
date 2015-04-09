@@ -1,15 +1,11 @@
-/*$.getScript('js/dao/event.js', function() {
-	listEvent("logon",function(events) {
-		$.each(events, function(key, event) {
-			insertDetailedEvent(parent,event);
-		}
-		)
-	});*/S
-function insertDetailedEvent(parent,event) {
+//Event evento = new Event(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category);
+var tiempo = Date.now();
+
+function insertDetailedEvent(parent) {
 	parent.append('<!-- Features Section -->\
         <div class="row">\
             <div class="col-lg-12">\
-                <h2 class="page-header">AQUI IRIA EL NOMBRE DEL EVENTO</h2>\
+                <h2 class="page-header">AQUI IRIA EL NOMBRE DEL EVENTO' +tiempo.getTime()+ '</h2>\
             </div>\
             <div class="col-md-6">\
                 <ul>\
