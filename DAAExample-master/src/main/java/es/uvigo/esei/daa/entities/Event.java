@@ -9,13 +9,15 @@ public class Event {
 	private Timestamp dateFinal;
 	private String description;
 	private String category;
+	private String image;
+	private String author;
 	
 	
 	public Event(){
 	
 	}
 	
-	public Event(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category){
+	public Event(int id,String nameEvent, Timestamp dateCreate, Timestamp dateInit, Timestamp dateFinal, String description, String category,String image,String author){
 		this.setId(id); 
 		this.setDateCreate(dateCreate);
 		this.setDateInit(dateInit);
@@ -23,6 +25,8 @@ public class Event {
 		this.setDescription(description);
 		this.setCategory(category);
 		this.setNameEvent(nameEvent);
+		this.setImage(image);
+		this.setAuthor(author);
 		
 	}
 
@@ -80,6 +84,22 @@ public class Event {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 
