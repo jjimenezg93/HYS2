@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -36,7 +34,9 @@ public class EventDAO extends DAO {
 								result.getTimestamp("dateInit"),
 								result.getTimestamp("dateFinal"),
 								result.getString("description"),
-								result.getString("category"));
+								result.getString("category"),
+								result.getString("image"),
+								result.getString("author"));
 					} else {
 						throw new IllegalArgumentException("Invalid id");
 					}
@@ -65,7 +65,7 @@ public class EventDAO extends DAO {
 	 * "Error listing events", e); throw new DAOException(e); } }
 	 */
 	//mcpaz y adri
-	public List<Event> listRecomended(String login) throws DAOException {
+	public Event[] listRecomended(String login) throws DAOException {
 		final SortedMap<String, Integer> mapaCategorias = new TreeMap();//sortedMap devielve un mapa ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser,event where event.id = eventUser.id; ";
@@ -88,25 +88,27 @@ public class EventDAO extends DAO {
 					
 					Iterator<String> iterator = mapaCategorias.keySet()
 							.iterator();
-					final List<Event> events = new LinkedList<>();
+					final Event[] events = new Event[10];
 					while (iterator.hasNext()) {
 						String key = (String) iterator.next();
-						final String eventoRecomen = "SELECT * FROM event where nameEvent =  "
-								+ key;
+						final String eventoRecomen = "SELECT * FROM event where category =  "
+								+ "'" + key + "'";
 
 						try (final PreparedStatement stat = conn
 								.prepareStatement(eventoRecomen)) {
 							try (final ResultSet res = stat.executeQuery()) {
-								
+								int i=0;
 								while (res.next()) {
-									events.add(new Event(res.getInt("id"), res
+									events[i]=(new Event(res.getInt("id"), res
 											.getString("nameEvent"), res
 											.getTimestamp("dateCreate"), res
 											.getTimestamp("dateInit"), res
 											.getTimestamp("dateFinal"), res
 											.getString("description"), res
-											.getString("category")));
-				
+											.getString("category"),res
+											.getString("image"),res
+											.getString("author")));
+										i++;
 								}
 
 							}
@@ -145,7 +147,7 @@ public class EventDAO extends DAO {
 
 	public Event modify(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category) throws DAOException, IllegalArgumentException {
+			String category,String image,String author) throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
@@ -161,10 +163,12 @@ public class EventDAO extends DAO {
 				statement.setString(4, dateFinal.toString());
 				statement.setString(5, description);
 				statement.setString(6, category);
+				statement.setString(7, image);
+				statement.setString(8, author);
 
 				if (statement.executeUpdate() == 1) {
 					return new Event(id, nameEvent, dateCreate, dateInit,
-							dateFinal, description, category);
+							dateFinal, description, category,image,author);
 				} else {
 					throw new IllegalArgumentException(
 							"id and name cannot be null");
@@ -178,7 +182,7 @@ public class EventDAO extends DAO {
 
 	public Event add(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category) throws DAOException, IllegalArgumentException {
+			String category,String image,String author) throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
@@ -195,13 +199,15 @@ public class EventDAO extends DAO {
 				statement.setString(4, dateFinal.toString());
 				statement.setString(5, description);
 				statement.setString(6, category);
+				statement.setString(7, image);
+				statement.setString(8, author);
 
 				if (statement.executeUpdate() == 1) {
 					try (ResultSet resultKeys = statement.getGeneratedKeys()) {
 						if (resultKeys.next()) {
 							return new Event(resultKeys.getInt(1), nameEvent,
 									dateCreate, dateInit, dateFinal,
-									description, category);
+									description, category,image,author);
 						} else {
 							LOG.log(Level.SEVERE,
 									"Error retrieving inserted id");
