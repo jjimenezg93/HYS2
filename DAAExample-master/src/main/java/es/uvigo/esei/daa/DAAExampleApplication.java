@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import es.uvigo.esei.daa.rest.EventResource;
 import es.uvigo.esei.daa.rest.PeopleResource;
 
 @ApplicationPath("/rest/*")
@@ -16,7 +17,8 @@ public class DAAExampleApplication extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 		return new HashSet<>(Arrays.asList(
-			PeopleResource.class
+			PeopleResource.class,
+			EventResource.class
 		));
 	}
 	

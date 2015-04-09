@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import es.uvigo.esei.daa.dao.DAOException;
 import es.uvigo.esei.daa.dao.UsersDAO;
 
-@WebFilter(urlPatterns = { "/*", "/logout" })
+//@WebFilter(urlPatterns = { "/*", "/logout" })
 public class LoginFilter implements Filter {
 	@Override
 	public void doFilter(

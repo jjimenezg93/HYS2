@@ -1,4 +1,4 @@
-package es.uvigo.esei.daa.dao;
+/*package es.uvigo.esei.daa.dao;
 
 import static org.junit.Assert.assertEquals;
 
@@ -111,4 +111,4 @@ public class PeopleDAOTest {
 	public void testAddNullSurname() throws DAOException {
 		this.dao.add("John", null);
 	}
-}
+}*/

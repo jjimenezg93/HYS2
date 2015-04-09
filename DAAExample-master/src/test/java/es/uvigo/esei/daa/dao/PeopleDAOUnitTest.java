@@ -1,4 +1,4 @@
-package es.uvigo.esei.daa.dao;
+/*package es.uvigo.esei.daa.dao;
 
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.eq;
@@ -270,3 +270,4 @@ public class PeopleDAOUnitTest extends DatabaseQueryUnitTest {
 		peopleDAO.modify(1, "Paco", "Pérez");
 	}
 }
+*/
