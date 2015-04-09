@@ -16,7 +16,10 @@ CREATE TABLE `daaexample`.`event`(
 	`dateFinal` timestamp,
 	`description` varchar(255) DEFAULT NULL,
 	`category` enum('musica','deportes','parranda') DEFAULT 'parranda',
-	PRIMARY KEY (`id`)
+	`image` varchar(400),
+	`author` varchar(100),
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`author`) REFERENCES users(login)
 	
 );
 
