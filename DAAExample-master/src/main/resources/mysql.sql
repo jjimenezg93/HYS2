@@ -1,5 +1,3 @@
-CREATE DATABASE `daaexample`;
-
 CREATE TABLE `daaexample`.`users` (
 	`login` varchar(100) NOT NULL,
 	`password` varbinary(64) DEFAULT NULL,
@@ -35,6 +33,9 @@ CREATE TABLE `daaexample`.`eventUser`(
 
 
 INSERT INTO `daaexample`.`users` (`login`,`password`,`name`,`surname`) VALUES ('logon','bitch','hiper','bitch');
-INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES ("vamos de parranda","2015-07-15 13:30:00","2015-08-15 13:30:00","2015-08-15 15:30:00","vamos a comer una parrillada","parranda");
-INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES ("club de lectura","2015-06-03 16:30:00","2015-06-03 16:30:00","2015-06-15 18:30:00","hablaremos sobre algun libro","parranda");
+INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ("vamos de parranda","2015-07-15 13:30:00","2015-08-15 13:30:00","2015-08-15 15:30:00","vamos a comer una parrillada","parranda","img/prueba1.jpg","logon");
+INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ("club de lectura","2015-06-03 16:30:00","2015-06-03 16:30:00","2015-06-15 18:30:00","hablaremos sobre algun libro","parranda","img/prueba2.jpg","logon");
+INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ("pachanga en ourense","2015-07-15 13:30:00","2015-08-15 13:30:00","2015-08-15 15:30:00","vamos a comer una parrillada","deportes","img/prueba3.jpg","logon");
+INSERT INTO `daaexample`.`event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ("club de lectura","2015-06-03 16:30:00","2015-06-03 16:30:00","2015-06-15 18:30:00","hablaremos sobre algun libro","parranda","img/prueba4.jpg","logon");
 INSERT INTO `daaexample`.`eventUser` (`id`,`login`) VALUES (1,'logon');
+INSERT INTO `daaexample`.`eventUser` (`id`,`login`) VALUES (7,'logon');

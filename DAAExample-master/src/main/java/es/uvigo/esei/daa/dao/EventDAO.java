@@ -77,6 +77,7 @@ public class EventDAO extends DAO {
 				try (final ResultSet result = statement.executeQuery()) {
 					while (result.next()) {// aqui creo que estamos contando las
 											// veces que se repite una categoria
+						
 						if (!mapaCategorias.containsKey(result
 								.getString("category"))) {
 							mapaCategorias.put(result.getString("category"), 1);
@@ -91,6 +92,9 @@ public class EventDAO extends DAO {
 					Iterator<String> iterator = mapaCategorias.keySet()
 							.iterator();
 					final List<Event> events = new LinkedList<>();
+					
+					while(events.size()<4  && iterator.hasNext()){
+						
 					while (iterator.hasNext()) {
 						String key = (String) iterator.next();
 						final String eventoRecomen = "SELECT * FROM event where category =  "
@@ -100,7 +104,7 @@ public class EventDAO extends DAO {
 								.prepareStatement(eventoRecomen)) {
 							try (final ResultSet res = stat.executeQuery()) {
 		
-								while (res.next()) {
+								while (res.next() && events.size()<4) {
 									events.add(new Event(res.getInt("id"), res
 											.getString("nameEvent"), res
 											.getTimestamp("dateCreate"), res
@@ -116,7 +120,8 @@ public class EventDAO extends DAO {
 							}
 						}
 					}
-
+					}
+					System.out.println(mapaCategorias.toString());
 					return events;
 
 				}
