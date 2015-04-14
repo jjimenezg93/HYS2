@@ -14,11 +14,12 @@ function init(parent){
 
 function modificarDetailed(eventName,category,author,dateInit,image,description){
 		
+	var date = new Date(Number(dateInit)).toDateString();
 	var documento= $("#detailedform");
 	documento.find('input[name="eventname"]').val(eventName);
 	documento.find('input[name="category"]').val(category);
 	documento.find('input[name="author"]').val(author);
-	documento.find('input[name="dateInit"]').val(dateInit);
+	documento.find('input[name="dateInit"]').val(date.toString());
 	document.getElementById('description').innerHTML = description;
 	document["eventImage"].src = image;
 
@@ -40,7 +41,7 @@ function insertDetailedEvent(parent,event) {
                 <ul>\
 					<li><strong>Categoría: </strong><input type="text" name="category" value="'+event.category+'"/></li>\
 					<li><strong>Creador: </strong><input type="text" name="author" value="'+event.author+'"/></li>\
-                    <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'+event.dateInit+'"/></li>\
+                    <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'+new Date(Number(event.dateInit)).toDateString()+'"/></li>\
                 </ul>\
                 <p id="description">'+event.description+'</p>\
         		</form>\
