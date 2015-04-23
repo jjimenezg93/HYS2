@@ -1,3 +1,8 @@
+drop database daaexample;
+create database daaexample;
+use daaexample;
+
+
 
 CREATE TABLE `daaexample`.`users` (
 	`login` varchar(100) NOT NULL,
