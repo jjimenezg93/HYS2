@@ -49,9 +49,9 @@ public class EventResourceUnitTest {
 	@Test
 	public void testlistRecomended() throws Exception {
 		final List<Event> events = Arrays.asList(
-			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo"),
-			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo"),
-			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo")
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria", "Ourense", "/img/prueba.jpg","Pablo"),
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria", "Ourense", "/img/prueba.jpg","Pablo"),
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria", "Ourense", "/img/prueba.jpg","Pablo")
 		);
 		
 		expect(daoMock.listRecomended("Pablo")).andReturn(events);

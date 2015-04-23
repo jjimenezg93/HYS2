@@ -61,7 +61,7 @@ public class EventDAOUnitTest extends DatabaseQueryUnitTest {
 	@Test
 	public void testlistRecomended() throws Exception {
 		final List<Event> events = Arrays.asList(
-				new Event(3,"Pachanga en Ourense", new Timestamp(1439483400),new Timestamp(1442161800),new Timestamp(1442169000),"Partido de futbol entre amigos en el campo del campus de ourense","Deportes","img/prueba3.jpg","Pablo")
+				new Event(3,"Pachanga en Ourense", new Timestamp(1439483400),new Timestamp(1442161800),new Timestamp(1442169000),"Partido de futbol entre amigos en el campo del campus de ourense","Deportes", "Ourense", "img/prueba3.jpg","Pablo")
 				//new Event(1,"Fiesta de Disfraces", new Timestamp(1436959800),new Timestamp(1439638200),new Timestamp(1439645400),"Fiesta de disfraces para celebrar el inicio de la primavera","Fiesta","img/prueba1.jpg","Pablo"),
 				//new Event(4,"Parrillada en Vigo", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Cada uno debe pagar 5 euros para comprar comida y bebida","Fiesta","img/prueba4.jpg","Pablo"),
 				//new Event(2,"Club de lectura", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Hablaremos sobre algun libro, uno diferente cada semana","Literatura","img/prueba2.jpg","Maria")
