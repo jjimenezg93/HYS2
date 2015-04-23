@@ -29,7 +29,7 @@ public final class TestUtils {
 
 	public static void createFakeContext(DataSource datasource)
 	throws IllegalStateException, NamingException {
-		CONTEXT_BUILDER.bind("java:/comp/env/jdbc/daaexampletest", datasource);
+		CONTEXT_BUILDER.bind("java:/comp/env/jdbc/daaexample", datasource);
 		CONTEXT_BUILDER.activate();
 	}
 	
@@ -71,9 +71,12 @@ public final class TestUtils {
 	
 	public static void initTestDatabase() throws SQLException {
 		final String queries = new StringBuilder()
-			.append("INSERT INTO `event` (`id`,`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES (0, 'vamos de parranda','2015-07-15 13:30:00','2015-08-15 13:30:00','2015-08-15 15:30:00','vamos a comer una parrillada','parranda');")
-			.append("INSERT INTO `users` (`login`,`password`,`name`,`surname`) VALUES ('logon','bitch','hiper','bitch');")
-			.append("INSERT INTO `event` (`id`,`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`) VALUES (0, 'club de lectura'  ,'2015-06-03 16:30:00','2015-06-03 16:30:00','2015-06-15 18:30:00','hablaremos sobre algun libro','parranda');")
+			.append("INSERT INTO `users` (`login`,`password`,`name`,`surname`) VALUES ('Pablo','pablo123','Pablo','Perez');")
+			.append("INSERT INTO `users` (`login`,`password`,`name`,`surname`) VALUES ('Maria','maria123','Maria','Garcia');")
+			.append("INSERT INTO `event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ('Fiesta de Disfraces','2015-07-15 13:30:00','2015-08-15 13:30:00','2015-08-15 15:30:00','Fiesta de disfraces para celebrar el inicio de la primavera','Fiesta','img/prueba1.jpg','Pablo');")
+			.append("INSERT INTO `event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ('Club de lectura','2015-06-03 16:30:00','2015-06-03 16:30:00','2015-06-15 18:30:00','Hablaremos sobre algun libro, uno diferente cada semana','Literatura','img/prueba2.jpg','Maria');")
+			.append("INSERT INTO `event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ('Pachanga en Ourense','2015-08-13 18:30:00','2015-09-13 18:30:00','2015-09-13 20:30:00','Partido de futbol entre amigos en el campo del campus de ourense','Deportes','img/prueba3.jpg','Pablo');")
+			.append("INSERT INTO `event` (`nameEvent`,`dateCreate`,`dateInit`,`dateFinal`,`description`,`category`,`image`,`author`) VALUES ('Parrillada en Vigo','2015-06-03 16:30:00','2015-06-03 16:30:00','2015-06-15 18:30:00','Cada uno debe pagar 5 euros para comprar comida y bebida','Fiesta','img/prueba4.jpg','Pablo');")
 			.toString();
 
 		final DataSource ds = createTestingDataSource();
@@ -81,11 +84,12 @@ public final class TestUtils {
 			try (Statement statement = connection.createStatement()) {
 				statement.execute(queries,Statement.RETURN_GENERATED_KEYS);
 				
-				try (PreparedStatement statement2 = connection.prepareStatement("INSERT INTO `eventuser` (`id`,`login`) VALUES (?,'logon');")) {
+				try (PreparedStatement statement2 = connection.prepareStatement("INSERT INTO `eventuser` (`id`,`login`) VALUES (?,'Pablo');")) {
 					ResultSet rs=statement.getGeneratedKeys();
-					while(rs.next())
-					statement2.setInt(1,rs.getInt(1));
-					statement2.execute();
+					while(rs.next()){
+						statement2.setInt(1,rs.getInt(1));
+						statement2.execute();
+					}
 				}
 			}
 		}

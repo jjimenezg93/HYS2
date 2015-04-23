@@ -24,6 +24,7 @@ public abstract class DatabaseQueryUnitTest {
 	protected Connection connection;
 	protected PreparedStatement statement;
 	protected ResultSet result;
+	protected ResultSet res;
 	
 	protected boolean verify;
 	
@@ -39,6 +40,7 @@ public abstract class DatabaseQueryUnitTest {
 		connection = createMock(Connection.class);
 		statement = createNiceMock(PreparedStatement.class);
 		result = createMock(ResultSet.class);
+		res = createMock(ResultSet.class);
 		
 		expect(datasource.getConnection())
 			.andReturn(connection);
@@ -46,7 +48,11 @@ public abstract class DatabaseQueryUnitTest {
 			.andReturn(statement);
 		expect(statement.executeQuery())
 			.andReturn(result)
-			.anyTimes(); // executeQuery is optional;
+			.anyTimes();
+		expect(statement.executeQuery())
+		.andReturn(res)
+		.anyTimes();// executeQuery is optional;
+		
 		statement.close();
 		connection.close();
 		
@@ -54,13 +60,13 @@ public abstract class DatabaseQueryUnitTest {
 	}
 	
 	protected void resetAll() {
-		reset(result, statement, connection, datasource);
+		reset(result, statement, connection, datasource,res);
 		verify = false;
 	}
 	
 	protected void replayAll()
 	throws Exception {
-		replay(result, statement, connection, datasource);
+		replay(result, statement, connection, datasource,res);
 		
 		TestUtils.createFakeContext(datasource);
 	}

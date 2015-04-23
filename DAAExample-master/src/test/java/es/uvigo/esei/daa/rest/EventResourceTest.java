@@ -36,14 +36,14 @@ public class EventResourceTest extends JerseyTest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		TestUtils.initTestDatabase();
+		//TestUtils.initTestDatabase();
 	}
 	
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
 		
-		TestUtils.clearTestDatabase();
+		//TestUtils.clearTestDatabase();
 	}
 
 	@Override
@@ -61,15 +61,15 @@ public class EventResourceTest extends JerseyTest {
 		config.property("com.sun.jersey.api.json.POJOMappingFeature", Boolean.TRUE);
 	}
 	
-	/*@Test
-	public void testList() throws IOException {
-		final Response response = target("event").request().get();
+	@Test
+	public void testlistRecomended() throws IOException {
+		final Response response = target("event/Pablo").request().get();
 		assertOkStatus(response);
 
 		final List<Event> event = response.readEntity(new GenericType<List<Event>>(){});
-		assertEquals(2, event.size());
+		assertEquals(4, event.size());
 	}
-
+/*
 	@Test
 	public void testGet() throws IOException {
 		final Response response = target("event/1").request().get();

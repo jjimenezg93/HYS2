@@ -1,4 +1,4 @@
-/*package es.uvigo.esei.daa.web;
+package es.uvigo.esei.daa.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -18,7 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import es.uvigo.esei.daa.TestUtils;
 
-public class PeopleWebTest {
+public class IndexWebTest {
 	private static final int DEFAULT_WAIT_TIME = 1;
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
@@ -33,7 +33,7 @@ public class PeopleWebTest {
 	public void setUp() throws Exception {
 		TestUtils.initTestDatabase();
 		
-		final String baseUrl = "http://localhost:9080/HYS2/";
+		final String baseUrl = "http://localhost:8080/HYS2/";
 		
 		driver = new FirefoxDriver();
 		driver.get(baseUrl);
@@ -42,8 +42,8 @@ public class PeopleWebTest {
 		// Driver will wait DEFAULT_WAIT_TIME if it doesn't find and element.
 		driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_TIME, TimeUnit.SECONDS);
 		
-		driver.get(baseUrl + "main.html");
-		driver.findElement(By.id("people-list"));
+		driver.get(baseUrl + "index.html");
+		//driver.findElement(By.id("people-list"));
 	}
 	
 	@After
@@ -131,4 +131,3 @@ public class PeopleWebTest {
 		}
 	}
 }
-*/

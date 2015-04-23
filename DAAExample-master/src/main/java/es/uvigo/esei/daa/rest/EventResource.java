@@ -45,6 +45,5 @@ public class EventResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
-	
 
 }

@@ -1,4 +1,4 @@
-/*
+
 package es.uvigo.esei.daa.rest;
 
 import static org.easymock.EasyMock.anyInt;
@@ -10,28 +10,30 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.glassfish.grizzly.http.util.TimeStamp;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import es.uvigo.esei.daa.dao.DAOException;
-import es.uvigo.esei.daa.dao.PeopleDAO;
-import es.uvigo.esei.daa.entities.Person;
+import es.uvigo.esei.daa.dao.EventDAO;
+import es.uvigo.esei.daa.entities.Event;
 
-public class PeopleResourceUnitTest {
-	private PeopleDAO daoMock;
-	private PeopleResource resource;
+public class EventResourceUnitTest {
+	private EventDAO daoMock;
+	private EventResource resource;
 
 	@Before
 	public void setUp() throws Exception {
-		daoMock = createMock(PeopleDAO.class);
-		resource = new PeopleResource(daoMock);
+		daoMock = createMock(EventDAO.class);
+		resource = new EventResource(daoMock);
 	}
 
 	@After
@@ -45,22 +47,22 @@ public class PeopleResourceUnitTest {
 	}
 
 	@Test
-	public void testList() throws Exception {
-		final List<Person> people = Arrays.asList(
-			new Person(1, "Pepe", "Pérez"),
-			new Person(2, "Paco", "Martínez"),
-			new Person(3, "Martina", "Juárez")
+	public void testlistRecomended() throws Exception {
+		final List<Event> events = Arrays.asList(
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo"),
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo"),
+			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria","/img/prueba.jpg","Pablo")
 		);
 		
-		expect(daoMock.list()).andReturn(people);
+		expect(daoMock.listRecomended("Pablo")).andReturn(events);
 		replay(daoMock);
 		
-		final Response response = resource.list();
-		assertEquals(people, response.getEntity());
+		final Response response = resource.listRecomended("Pablo");
+		assertEquals(events, response.getEntity());
 		assertEquals(Status.OK, response.getStatusInfo());
 	}
 
-	@Test
+	/*@Test
 	public void testListDAOException() throws Exception {
 		expect(daoMock.list()).andThrow(new DAOException());
 		replay(daoMock);
@@ -196,6 +198,5 @@ public class PeopleResourceUnitTest {
 		
 		final Response response = resource.add("Paco", "Pérez");
 		assertEquals(Status.BAD_REQUEST, response.getStatusInfo());
-	}
+	}*/
 }
-*/

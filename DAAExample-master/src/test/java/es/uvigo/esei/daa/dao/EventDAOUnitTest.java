@@ -1,4 +1,4 @@
-/*package es.uvigo.esei.daa.dao;
+package es.uvigo.esei.daa.dao;
 
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.eq;
@@ -7,16 +7,17 @@ import static org.easymock.EasyMock.reset;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
 import es.uvigo.esei.daa.DatabaseQueryUnitTest;
-import es.uvigo.esei.daa.entities.Person;
+import es.uvigo.esei.daa.entities.Event;
 
-public class PeopleDAOUnitTest extends DatabaseQueryUnitTest {
-	@Test
+public class EventDAOUnitTest extends DatabaseQueryUnitTest {
+	/*@Test
 	public void testGet() throws Exception {
 		final Person person = new Person(1, "Pepe", "Pérez");
 		
@@ -55,33 +56,40 @@ public class PeopleDAOUnitTest extends DatabaseQueryUnitTest {
 		
 		final PeopleDAO peopleDAO = new PeopleDAO();
 		peopleDAO.get(2);
-	}
+	}*/
 
 	@Test
-	public void testList() throws Exception {
-		final List<Person> people = Arrays.asList(
-			new Person(1, "Pepe", "Pérez"),
-			new Person(2, "Paco", "Martínez"),
-			new Person(3, "Martina", "Juárez")
-		);
+	public void testlistRecomended() throws Exception {
+		final List<Event> events = Arrays.asList(
+				new Event(3,"Pachanga en Ourense", new Timestamp(1439483400),new Timestamp(1442161800),new Timestamp(1442169000),"Partido de futbol entre amigos en el campo del campus de ourense","Deportes","img/prueba3.jpg","Pablo")
+				//new Event(1,"Fiesta de Disfraces", new Timestamp(1436959800),new Timestamp(1439638200),new Timestamp(1439645400),"Fiesta de disfraces para celebrar el inicio de la primavera","Fiesta","img/prueba1.jpg","Pablo"),
+				//new Event(4,"Parrillada en Vigo", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Cada uno debe pagar 5 euros para comprar comida y bebida","Fiesta","img/prueba4.jpg","Pablo"),
+				//new Event(2,"Club de lectura", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Hablaremos sobre algun libro, uno diferente cada semana","Literatura","img/prueba2.jpg","Maria")
+			);
 		
-		for (Person person : people) {
+		for (Event event : events) {
 			expect(result.next()).andReturn(true);
-			expect(result.getInt("id")).andReturn(person.getId());
-			expect(result.getString("name")).andReturn(person.getName());
-			expect(result.getString("surname")).andReturn(person.getSurname());
+			expect(result.getInt("id")).andReturn(event.getId());
+			expect(result.getString("nameEvent")).andReturn(event.getNameEvent());
+			expect(result.getTimestamp("dateCreate")).andReturn(event.getDateCreate());
+			expect(result.getTimestamp("dateInit")).andReturn(event.getDateInit());
+			expect(result.getTimestamp("dateFinal")).andReturn(event.getDateFinal());
+			expect(result.getString("description")).andReturn(event.getDescription());
+			expect(result.getString("category")).andReturn("Fiesta");
+			expect(result.getString("image")).andReturn(event.getImage());
+			expect(result.getString("author")).andReturn(event.getAuthor());
 		}
 		expect(result.next()).andReturn(false);
 		result.close();
 		
 		replayAll();
-		final PeopleDAO peopleDAO = new PeopleDAO();
+		final EventDAO eventDAO = new EventDAO();
 
-		assertEquals("Unexpected people data",
-			people, peopleDAO.list()
+		assertEquals("Unexpected event data",
+			events, eventDAO.listRecomended("Pablo")
 		);
 	}
-	
+	/*
 	@Test(expected = DAOException.class)
 	public void testListUnexpectedException() throws Exception {
 		expect(result.next()).andThrow(new SQLException());
@@ -268,6 +276,5 @@ public class PeopleDAOUnitTest extends DatabaseQueryUnitTest {
 		
 		final PeopleDAO peopleDAO = new PeopleDAO();
 		peopleDAO.modify(1, "Paco", "Pérez");
-	}
+	}*/
 }
-*/
