@@ -5,7 +5,7 @@
 	<artifactId>example</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>DAA Example</name>
+	<name>HYS2</name>
 
 	<licenses>
 		<license>
@@ -127,7 +127,7 @@
 	</reporting>
 
 	<build>
-		<finalName>DAAExample</finalName>
+		<finalName>HYS2</finalName>
 		<plugins>
 			<!-- Build war -->
 			<plugin>
@@ -135,7 +135,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<version>${maven.war.plugin.version}</version>
 				<configuration>
-					<warName>DAAExample</warName>
+					<warName>HYS2</warName>
 				</configuration>
 			</plugin>
 
@@ -241,7 +241,7 @@
 				<version>${tomcat.maven.plugin.version}</version>
 				<configuration>
 					<port>9080</port>
-					<path>/DAAExample</path>
+					<path>/HYS2</path>
 					<contextFile>src/test/webapp/META-INF/context.xml</contextFile>
 					<useTestClasspath>false</useTestClasspath>
 				</configuration>
