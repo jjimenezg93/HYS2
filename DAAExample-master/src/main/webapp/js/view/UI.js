@@ -12,7 +12,7 @@ function init(parent){
 	
 }
 
-function modificarDetailed(eventName,category,author,dateInit,image,description){
+function modificarDetailed(eventName, category, author, dateInit, place, image, description){
 		
 	var date = new Date(Number(dateInit)).toDateString();
 	var documento= $("#detailedform");
@@ -20,6 +20,7 @@ function modificarDetailed(eventName,category,author,dateInit,image,description)
 	documento.find('input[name="category"]').val(category);
 	documento.find('input[name="author"]').val(author);
 	documento.find('input[name="dateInit"]').val(date.toString());
+	documento.find('input[name="place"]').val(place);
 	document.getElementById('description').innerHTML = description;
 	document["eventImage"].src = image;
 
@@ -42,6 +43,7 @@ function insertDetailedEvent(parent,event) {
 					<li><strong>Categoría: </strong><input type="text" name="category" value="'+event.category+'"/></li>\
 					<li><strong>Creador: </strong><input type="text" name="author" value="'+event.author+'"/></li>\
                     <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'+new Date(Number(event.dateInit)).toDateString()+'"/></li>\
+                    <li><strong>Lugar: </strong><input type="text" name="place" value="'+event.place+'"/></li>\
                 </ul>\
                 <p id="description">'+event.description+'</p>\
         		</form>\
@@ -61,17 +63,17 @@ function insertRecommended(parent,events) {
             <h2 class="page-header">Eventos recomendados</h2>\
         </div>\
         <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[0].image+'" alt="" onclick="modificarDetailed(\''+events[0].nameEvent+'\',\''+events[0].category+'\',\''+events[0].author+'\',\''+events[0].dateInit+'\',\''+events[0].image+'\',\''+events[0].description+'\')">\
+                <img class="img-responsive img-portfolio img-hover" src="'+ events[0].image+'" alt="" onclick="modificarDetailed(\''+events[0].nameEvent+'\',\''+events[0].category+'\',\''+events[0].author+'\',\''+events[0].dateInit+'\',\''+events[0].place+'\',\''+events[0].image+'\',\''+events[0].description+'\')">\
         </div>\
         <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[1].image+'" alt="" onclick="modificarDetailed(\''+events[1].nameEvent+'\',\''+events[1].category+'\',\''+events[1].author+'\',\''+events[1].dateInit+'\',\''+events[1].image+'\',\''+events[1].description+'\');">\
+                <img class="img-responsive img-portfolio img-hover" src="'+ events[1].image+'" alt="" onclick="modificarDetailed(\''+events[1].nameEvent+'\',\''+events[1].category+'\',\''+events[1].author+'\',\''+events[1].dateInit+'\',\''+events[1].place+'\',\''+events[1].image+'\',\''+events[1].description+'\');">\
         </div>\
         <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[2].image+'" alt="" onclick="modificarDetailed(\''+events[2].nameEvent+'\',\''+events[2].category+'\',\''+events[2].author+'\',\''+events[2].dateInit+'\',\''+events[2].image+'\',\''+events[2].description+'\');">\
+                <img class="img-responsive img-portfolio img-hover" src="'+ events[2].image+'" alt="" onclick="modificarDetailed(\''+events[2].nameEvent+'\',\''+events[2].category+'\',\''+events[2].author+'\',\''+events[2].dateInit+'\',\''+events[2].place+'\',\''+events[2].image+'\',\''+events[2].description+'\');">\
             </a>\
         </div>\
         <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[3].image+'" alt="" onclick="modificarDetailed(\''+events[3].nameEvent+'\',\''+events[3].category+'\',\''+events[3].author+'\',\''+events[3].dateInit+'\',\''+events[3].image+'\',\''+events[3].description+'\');">\
+                <img class="img-responsive img-portfolio img-hover" src="'+ events[3].image+'" alt="" onclick="modificarDetailed(\''+events[3].nameEvent+'\',\''+events[3].category+'\',\''+events[3].author+'\',\''+events[3].dateInit+'\',\''+events[3].place+'\',\''+events[3].image+'\',\''+events[3].description+'\');">\
         </div>\
     </div>')
 }

@@ -37,6 +37,7 @@ public class EventDAO extends DAO {
 								result.getTimestamp("dateFinal"),
 								result.getString("description"),
 								result.getString("category"),
+								result.getString("place"),
 								result.getString("image"),
 								result.getString("author"));
 					} else {
@@ -112,6 +113,7 @@ public class EventDAO extends DAO {
 											.getTimestamp("dateFinal"), res
 											.getString("description"), res
 											.getString("category"),res
+											.getString("place"),res
 											.getString("image"),res
 											.getString("author")));
 									
@@ -154,7 +156,7 @@ public class EventDAO extends DAO {
 
 	public Event modify(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category,String image,String author) throws DAOException, IllegalArgumentException {
+			String category, String place, String image,String author) throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
@@ -170,12 +172,13 @@ public class EventDAO extends DAO {
 				statement.setString(4, dateFinal.toString());
 				statement.setString(5, description);
 				statement.setString(6, category);
-				statement.setString(7, image);
-				statement.setString(8, author);
+				statement.setString(7, place);
+				statement.setString(8, image);
+				statement.setString(9, author);
 
 				if (statement.executeUpdate() == 1) {
 					return new Event(id, nameEvent, dateCreate, dateInit,
-							dateFinal, description, category,image,author);
+							dateFinal, description, category, place, image,author);
 				} else {
 					throw new IllegalArgumentException(
 							"id and name cannot be null");
@@ -189,7 +192,7 @@ public class EventDAO extends DAO {
 
 	public Event add(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category,String image,String author) throws DAOException, IllegalArgumentException {
+			String category, String place, String image,String author) throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
@@ -206,15 +209,16 @@ public class EventDAO extends DAO {
 				statement.setString(4, dateFinal.toString());
 				statement.setString(5, description);
 				statement.setString(6, category);
-				statement.setString(7, image);
-				statement.setString(8, author);
+				statement.setString(7, place);
+				statement.setString(8, image);
+				statement.setString(9, author);
 
 				if (statement.executeUpdate() == 1) {
 					try (ResultSet resultKeys = statement.getGeneratedKeys()) {
 						if (resultKeys.next()) {
 							return new Event(resultKeys.getInt(1), nameEvent,
 									dateCreate, dateInit, dateFinal,
-									description, category,image,author);
+									description, category, place, image, author);
 						} else {
 							LOG.log(Level.SEVERE,
 									"Error retrieving inserted id");
