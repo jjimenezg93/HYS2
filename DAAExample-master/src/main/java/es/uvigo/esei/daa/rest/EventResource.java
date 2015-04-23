@@ -36,7 +36,7 @@ public class EventResource {
 
 	//mcpaz y adri
 	@GET
-	@Path("/{id}")
+	@Path("/{login}")
 	public Response listRecomended(@PathParam("login") String login) {
 		try {
 			return Response.ok(this.dao.listRecomended(login)).build();

@@ -67,61 +67,71 @@ public class EventDAO extends DAO {
 	 * return events; } } } catch (SQLException e) { LOG.log(Level.SEVERE,
 	 * "Error listing events", e); throw new DAOException(e); } }
 	 */
-	//mcpaz y adri
+	// mcpaz y adri
+
 	public List<Event> listRecomended(String login) throws DAOException {
-		final SortedMap<String, Integer> mapaCategorias = new TreeMap();	//sortedMap devuelve un mapa ordenado
+		int numEvents = 4;
+		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap
+																			// devuelve
+																			// un
+																			// mapa
+																			// ordenado
 		try (final Connection conn = this.getConnection()) {
-			final String eventosUser = "SELECT event.category FROM eventUser,event where event.id = eventUser.id; ";
+			final String eventosUser = "SELECT event.category FROM eventUser, event where eventUser.id = event.id and eventUser.login = "
+					+ "'" + login + "'";
 
 			try (final PreparedStatement statement = conn
 					.prepareStatement(eventosUser)) {
-				try (final ResultSet result = statement.executeQuery()) {
-					while (result.next()) {// aqui creo que estamos contando las
-											// veces que se repite una categoria
-						
-						if (!mapaCategorias.containsKey(result
+				try (final ResultSet pastEventsUser = statement.executeQuery()) {
+					while (pastEventsUser.next()) {// aqui creo que estamos
+													// contando las
+						// veces que se repite una categoria
+
+						if (!mapaCategorias.containsKey(pastEventsUser
 								.getString("category"))) {
-							mapaCategorias.put(result.getString("category"), 1);
+							mapaCategorias.put(
+									pastEventsUser.getString("category"), 1);
 						} else {
-							mapaCategorias.replace(
-									result.getString("category"),
-									mapaCategorias.get(result
+							mapaCategorias.replace(pastEventsUser
+									.getString("category"),
+									mapaCategorias.get(pastEventsUser
 											.getString("category")) + 1);
 						}
 					}
-					
+
 					Iterator<String> iterator = mapaCategorias.keySet()
 							.iterator();
 					final List<Event> events = new LinkedList<>();
-					
-					while(events.size()<4  && iterator.hasNext()){
-						
-					while (iterator.hasNext()) {
-						String key = (String) iterator.next();
-						final String eventoRecomen = "SELECT * FROM event where category =  "
-								+ "'" + key + "'";
 
-						try (final PreparedStatement stat = conn
-								.prepareStatement(eventoRecomen)) {
-							try (final ResultSet res = stat.executeQuery()) {
-		
-								while (res.next() && events.size()<4) {
-									events.add(new Event(res.getInt("id"), res
-											.getString("nameEvent"), res
-											.getTimestamp("dateCreate"), res
-											.getTimestamp("dateInit"), res
-											.getTimestamp("dateFinal"), res
-											.getString("description"), res
-											.getString("category"),res
-											.getString("place"),res
-											.getString("image"),res
-											.getString("author")));
-									
+					while (events.size() < numEvents && iterator.hasNext()) {
+
+						while (iterator.hasNext()) {
+							String key = (String) iterator.next();
+							final String eventoRecomen = "SELECT * FROM event where category =  "
+									+ "'" + key + "'";
+
+							try (final PreparedStatement stat = conn
+									.prepareStatement(eventoRecomen)) {
+								try (final ResultSet res = stat.executeQuery()) {
+
+									while (res.next()
+											&& events.size() < numEvents) {
+										events.add(new Event(res.getInt("id"),
+												res.getString("nameEvent"),
+												res.getTimestamp("dateCreate"),
+												res.getTimestamp("dateInit"),
+												res.getTimestamp("dateFinal"),
+												res.getString("description"),
+												res.getString("category"), res
+														.getString("place"),
+												res.getString("image"), res
+														.getString("author")));
+
+									}
+
 								}
-
 							}
 						}
-					}
 					}
 					System.out.println(mapaCategorias.toString());
 					return events;
@@ -156,7 +166,8 @@ public class EventDAO extends DAO {
 
 	public Event modify(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category, String place, String image,String author) throws DAOException, IllegalArgumentException {
+			String category, String place, String image, String author)
+			throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
@@ -178,7 +189,8 @@ public class EventDAO extends DAO {
 
 				if (statement.executeUpdate() == 1) {
 					return new Event(id, nameEvent, dateCreate, dateInit,
-							dateFinal, description, category, place, image,author);
+							dateFinal, description, category, place, image,
+							author);
 				} else {
 					throw new IllegalArgumentException(
 							"id and name cannot be null");
@@ -192,7 +204,8 @@ public class EventDAO extends DAO {
 
 	public Event add(int id, String nameEvent, Timestamp dateCreate,
 			Timestamp dateInit, Timestamp dateFinal, String description,
-			String category, String place, String image,String author) throws DAOException, IllegalArgumentException {
+			String category, String place, String image, String author)
+			throws DAOException, IllegalArgumentException {
 		if (nameEvent == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
