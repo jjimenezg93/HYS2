@@ -69,7 +69,7 @@ public class EventDAO extends DAO {
 	 */
 	//mcpaz y adri
 	public List<Event> listRecomended(String login) throws DAOException {
-		final SortedMap<String, Integer> mapaCategorias = new TreeMap();//sortedMap devielve un mapa ordenado
+		final SortedMap<String, Integer> mapaCategorias = new TreeMap();	//sortedMap devuelve un mapa ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser,event where event.id = eventUser.id; ";
 

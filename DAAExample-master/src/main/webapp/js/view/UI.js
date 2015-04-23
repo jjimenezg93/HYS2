@@ -28,6 +28,12 @@ function modificarDetailed(eventName, category, author, dateInit, place, image, 
 	
 	
 }
+
+function getGeolocation(parent){
+	/*parent.append('<div>' + document.write(geoip_city()) + '</div>'
+			)*/
+	
+}
 	
 
 function insertDetailedEvent(parent,event) {

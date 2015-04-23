@@ -4,35 +4,40 @@
 <meta charset="UTF-8">
 <title>DAA Example - Login</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/modern-business.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/modern-business.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="css/hys2.css" rel="stylesheet"  type="text/css">
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+<link href="css/hys2.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://j.maxmind.com/app/geoip.js"></script>
+
 </head>
 <body>
+	<div id="demo"></div>
 	<div class="container">
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	        <div class="container">
-	            <!-- Brand and toggle get grouped for better mobile display -->
-	            <div class="navbar-header">
-	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                </button>
-	                <!--<a class="navbar-brand" href="index.html">Inicio</a>-->
-	            </div>
-			
-	            <!-- Collect the nav links, forms, and other content for toggling -->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav navbar-right">
-	                    <!-- <li>
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<!--<a class="navbar-brand" href="index.html">Inicio</a>-->
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<!-- <li>
 	                        <a href="about.html">About</a>
 	                    </li>
 	                    <li class="dropdown">
@@ -55,26 +60,150 @@
 	                            </li>
 	                        </ul>
 	                    </li>-->
-	                </ul>
-	            </div>
-	            <!-- /.navbar-collapse -->
-	        </div>
-	        <!-- /.container -->
-	    </nav>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.js"></script>
-	<script type="text/javascript" src="js/dao/event.js"></script>
-	<script type="text/javascript" src="js/view/UI.js"></script>
-	<div id="Content">
-	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			init($('#Content'));
-			
-		});
-	</script>
-	<div id></div>
-	<div class = "manolo"></div>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+		<script type="text/javascript"
+			src="http://code.jquery.com/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/dao/event.js"></script>
+		<script type="text/javascript" src="js/view/UI.js"></script>
+		<div id="Content"></div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				init($('#Content'));
+				//getGeolocation('#Content');
 
+			});
+		</script>
+		
+		
+		<script type="text/javascript"
+			src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		
+		<!-- Cargar API GEONAMES -->
+		<script type="text/javascript"
+			src="api.geonames.org/postalCodeSearch?"></script>
+		
+		<!-- CONSEGUIR LATLNG -> (LATITUD, LONGITUD) -->
+		<script type="text/javascript">
+			var geocoder;
+
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(successFunction,
+						errorFunction);
+			}
+			//Get the latitude and the longitude;
+			function successFunction(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				var latlng = new google.maps.LatLng(lat, lng);
+				alert("Geocoder succeed: " + latlng);
+				displayLocation(lat, lng)
+			}
+
+			function errorFunction() {
+				alert("Geocoder failed");
+			}
+
+			function initialize() {
+				geocoder = new google.maps.Geocoder();
+
+			}
+
+			/* function codeLatLng(lat, lng) {
+
+				var latlng = new google.maps.LatLng(lat, lng);
+				geocoder
+						.geocode(
+								{
+									'latLng' : latlng
+								},
+								function(results, status) {
+									if (status == google.maps.GeocoderStatus.OK) {
+										console.log(results)
+										if (results[1]) {
+											//formatted address
+											alert(results[0].formatted_address)
+											//find country name
+											for (var i = 0; i < results[0].address_components.length; i++) {
+												for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+													//there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+													if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+														//this is the object you are looking for
+														city = results[0].address_components[i];
+														break;
+													}
+												}
+											}
+											//city data
+											alert("City: " + city.short_name + " "
+													+ city.long_name)
+
+										} else {
+											alert("No results found");
+										}
+									} else {
+										alert("Geocoder failed due to: "
+												+ status);
+									}
+								});
+			} */
+			
+			
+			
+			function displayLocation(latitude,longitude){
+		        var request = new XMLHttpRequest();
+
+		        var method = 'GET';
+		        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+		        var async = true;
+
+		        request.open(method, url, async);
+		        request.onreadystatechange = function(){
+		          if(request.readyState == 4 && request.status == 200){
+		            var data = JSON.parse(request.responseText);
+		            var address = data.results[0];
+		            document.write(address.formatted_address);
+		          }
+		        };
+		        request.send();
+		      };
+
+		      var successCallback = function(position){
+		        var x = position.coords.latitude;
+		        var y = position.coords.longitude;
+		        displayLocation(x,y);
+		      };
+
+		      var errorCallback = function(error){
+		        var errorMessage = 'Unknown error';
+		        switch(error.code) {
+		          case 1:
+		            errorMessage = 'Permission denied';
+		            break;
+		          case 2:
+		            errorMessage = 'Position unavailable';
+		            break;
+		          case 3:
+		            errorMessage = 'Timeout';
+		            break;
+		        }
+		        document.write(errorMessage);
+		      };
+
+		      var options = {
+		        enableHighAccuracy: true,
+		        timeout: 1000,
+		        maximumAge: 0
+		      };
+
+		      navigator.geolocation.getCurrentPosition(successCallback,errorCallback,options);
+			
+		</script>
 	</div>
 </body>
 </html>
