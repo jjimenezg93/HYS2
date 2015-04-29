@@ -18,7 +18,7 @@ function init(parent){
 	getUserGeolocation(function(userCity) {
 		listEvent("Pablo", userCity, function(events){
 			insertRecommended(parent,events);
-			insertDetailedEvent(parent,events[1]);
+			insertDetailedEvent(parent,events[3]);
 			slider();
 		});
 	

@@ -1,7 +1,6 @@
 package es.uvigo.esei.daa.web;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -77,13 +76,13 @@ public class IndexWebTest {
 	@Test
 	public void testListClick() throws Exception {
 		WebElement old = driver.findElement(By.name("eventname"));
-		WebElement second = driver.findElement(By.id("2"));
 		String s=old.getAttribute("value");
+		WebElement second = driver.findElement(By.id("contenedorDeEventos"));
 		second.click();
 		waitForTextInElement(By.name("eventname"), "");
 		WebElement nuevo = driver.findElement(By.name("eventname"));
-		assertEquals(not(s), nuevo.getAttribute("value"));
-		
+		assertNotEquals(s,nuevo.getAttribute("value"));
+
 		//System.out.println("Holaaaaaaa");
 	}
 /*
