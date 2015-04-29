@@ -13,18 +13,26 @@ function getUserGeolocation(callback){
 		}
 	});
 }
-
 function init(parent){
 	getUserGeolocation(function(userCity) {
-		listEvent("Pablo", userCity, function(events){
+		var user="Pablo";
+		listEvent(user, userCity, function(events){
 			insertRecommended(parent,events);
-			insertDetailedEvent(parent,events[1]);
+			insertDetailedEvent(parent,events[1],user);
 			slider();
 		});
 	
 	});
 }
 
+function insertar(user){
+	var documento= $("#detailedform");
+	eventid=documento.find('input[name="idEvento"]').val();
+	joinEvent(user,eventid);
+	
+	
+	
+}
 function modificarDetailed(eventName, category, author, dateInit, place, image, description){
 		
 	var date = new Date(Number(dateInit)).toDateString();
@@ -42,7 +50,7 @@ function modificarDetailed(eventName, category, author, dateInit, place, image, 
 	
 }
 
-function insertDetailedEvent(parent,event) {
+function insertDetailedEvent(parent,event,user) {
 
 	parent.append('<!-- Features Section -->\
         <div class="row" > \
@@ -56,9 +64,15 @@ function insertDetailedEvent(parent,event) {
 					<li><strong>Creador: </strong><input type="text" name="author" value="'+event.author+'"/></li>\
                     <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'+new Date(Number(event.dateInit)).toDateString()+'"/></li>\
                     <li><strong>Lugar: </strong><input type="text" name="place" value="'+event.place+'"/></li>\
+                    <input type="hidden" name="idEvento"  value="'+event.id+'">\
                 </ul>\
                 <p id="description">'+event.description+'</p>\
-        		</form>\
+                <div class ="col-md-4">\
+                </form>\
+                <center>\
+                	<button id ="btn-join" name="btn-join" onclick="insertar(\''+user+'\')">Apuntarse</button>\
+                </center>\
+                </div>\
             </div>\
             <div class="col-md-4 .col-md-offset-4">\
                 <img name="eventImage" class="img-responsive" src="'+event.image+'" alt="">\
