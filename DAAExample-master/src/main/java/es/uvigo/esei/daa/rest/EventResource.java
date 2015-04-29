@@ -14,8 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import es.uvigo.esei.daa.dao.DAOException;
 import es.uvigo.esei.daa.dao.EventDAO;
+import es.uvigo.esei.daa.entities.Event;
 
 @Path("/event")
 @Produces(MediaType.APPLICATION_JSON)
@@ -45,5 +47,20 @@ public class EventResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
-
+	
+	@POST
+	@Path("/{event}/{login}")
+	public Response add(@PathParam("event")int event, @PathParam("login") String login) {
+		try {
+			return Response.ok(this.dao.addEventUser(event, login)).build();
+		} catch (IllegalArgumentException iae) {
+			LOG.log(Level.FINE, "Invalid person id in add method", iae);
+			return Response.status(Response.Status.BAD_REQUEST)
+				.entity(iae.getMessage()).build();
+		} catch (DAOException e) {
+			LOG.log(Level.SEVERE, "Error adding a person", e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		
+	}
 }

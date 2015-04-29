@@ -69,7 +69,8 @@ public class EventDAO extends DAO {
 	 */
 	// mcpaz y adri
 
-	public List<Event> listRecomended(String login, String userCity) throws DAOException {
+	public List<Event> listRecomended(String login, String userCity)
+			throws DAOException {
 		int numEvents = 4;
 		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap
 																			// devuelve
@@ -78,7 +79,10 @@ public class EventDAO extends DAO {
 																			// ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser, event where eventUser.id = event.id and eventUser.login = "
-					+ "'" + login + "'" + " GROUP BY event.category ORDER BY COUNT(1) DESC";
+					+ "'"
+					+ login
+					+ "'"
+					+ " GROUP BY event.category ORDER BY COUNT(1) DESC";
 
 			try (final PreparedStatement statement = conn
 					.prepareStatement(eventosUser)) {
@@ -108,8 +112,10 @@ public class EventDAO extends DAO {
 						while (iterator.hasNext()) {
 							String key = (String) iterator.next();
 							final String eventoRecomen = "SELECT * FROM event where event.place = "
-					+ "'" + userCity + "'" + " and category =  "
-									+ "'" + key + "'";
+									+ "'"
+									+ userCity
+									+ "'"
+									+ " and category =  " + "'" + key + "'";
 
 							try (final PreparedStatement stat = conn
 									.prepareStatement(eventoRecomen)) {
@@ -123,10 +129,10 @@ public class EventDAO extends DAO {
 												res.getTimestamp("dateInit"),
 												res.getTimestamp("dateFinal"),
 												res.getString("description"),
-												res.getString("category"),
-												res.getString("place"),
-												res.getString("image"),
-												res.getString("author")));
+												res.getString("category"), res
+														.getString("place"),
+												res.getString("image"), res
+														.getString("author")));
 
 									}
 
@@ -246,6 +252,36 @@ public class EventDAO extends DAO {
 			}
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Error adding an event", e);
+			throw new DAOException(e);
+		}
+	}
+
+	public boolean addEventUser(int event, String login) throws DAOException,
+			IllegalArgumentException {
+
+		if (login == null || login == "") {
+			throw new IllegalArgumentException("No hay login");
+		}
+		try (Connection conn = this.getConnection()) {
+			final String query = "INSERT INTO eventUser VALUES(?, ?)";
+
+			try (PreparedStatement statement = conn.prepareStatement(query,
+					Statement.RETURN_GENERATED_KEYS)) {
+				// /Comprobar que los tostring de los timestampo funcionen
+				statement.setInt(1, event);
+				statement.setString(2, login);
+
+				if (statement.executeUpdate() != 1) {
+					throw new SQLException("Error insertando fila en eventUser");
+				} else {
+					return true;
+				}
+			} catch (SQLException e) {
+				LOG.log(Level.SEVERE, "Error añadiendo eventUser", e);
+				throw new DAOException(e);
+			}
+		} catch (SQLException e) {
+			LOG.log(Level.SEVERE, "Error añadiendo eventUser", e);
 			throw new DAOException(e);
 		}
 	}
