@@ -62,6 +62,20 @@ public class EventResourceUnitTest {
 		assertEquals(Status.OK, response.getStatusInfo());
 	}
 
+	@Test
+	public void testAdd() throws Exception {
+		
+		expect(daoMock.addEventUser(8,"Pablo"))
+			.andReturn(true);
+		replay(daoMock);
+		
+
+		final Response response = resource.add(
+			8, "Pablo");
+		assertEquals(true, response.getEntity());
+		assertEquals(Status.OK, response.getStatusInfo());
+	}
+	
 	/*@Test
 	public void testListDAOException() throws Exception {
 		expect(daoMock.list()).andThrow(new DAOException());
@@ -165,20 +179,6 @@ public class EventResourceUnitTest {
 		assertEquals(Status.BAD_REQUEST, response.getStatusInfo());
 	}
 
-	@Test
-	public void testAdd() throws Exception {
-		final Person person = new Person(1, "Pepe", "Pérez");
-		
-		expect(daoMock.add(person.getName(), person.getSurname()))
-			.andReturn(person);
-		replay(daoMock);
-		
-
-		final Response response = resource.add(
-			person.getName(), person.getSurname());
-		assertEquals(person, response.getEntity());
-		assertEquals(Status.OK, response.getStatusInfo());
-	}
 
 	@Test
 	public void testAddDAOException() throws Exception {
