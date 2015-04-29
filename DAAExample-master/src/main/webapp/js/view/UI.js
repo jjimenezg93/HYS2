@@ -35,7 +35,7 @@ function insertar(user){
 	
 	
 }
-function modificarDetailed(eventName, category, author, dateInit, place, image, description){
+function modificarDetailed(eventName, category, author, dateInit, place, image, description,idEvent){
 		
 	var date = new Date(Number(dateInit)).toDateString();
 	var documento= $("#detailedform");
@@ -44,6 +44,7 @@ function modificarDetailed(eventName, category, author, dateInit, place, image, 
 	documento.find('input[name="author"]').val(author);
 	documento.find('input[name="dateInit"]').val(date.toString());
 	documento.find('input[name="place"]').val(place);
+	documento.find('input[name="idEvento"]').val(idEvent);
 	document.getElementById('description').innerHTML = description;
 	document["eventImage"].src = image;
 
@@ -103,7 +104,7 @@ function insertRecommended(parent,events) {
 		
 	for (eve in events){
 	cadenaHtml+='	<div>\
-						<a id="event'+eve+'" u="image" onclick="modificarDetailed(\''+events[eve].nameEvent+'\',\''+events[eve].category+'\',\''+events[eve].author+'\',\''+events[eve].dateInit+'\',\''+events[eve].place+'\',\''+events[eve].image+'\',\''+events[eve].description+'\');">\
+						<a id="event'+eve+'" u="image" onclick="modificarDetailed(\''+events[eve].nameEvent+'\',\''+events[eve].category+'\',\''+events[eve].author+'\',\''+events[eve].dateInit+'\',\''+events[eve].place+'\',\''+events[eve].image+'\',\''+events[eve].description+'\',\''+events[eve].id+'\');">\
 						<img id="event'+eve+'" src="'+ events[eve].image+'" />\
 						</a>\
                 			<div id="event'+eve+'thumbcontainer" u="thumb">\

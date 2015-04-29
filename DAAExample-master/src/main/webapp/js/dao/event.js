@@ -20,7 +20,7 @@ function joinEvent(login, eventId, done, fail, always) {
 	always = typeof always !== 'undefined' ? always : function() {};
 	
 	$.ajax({
-		url: 'rest/event/' + login + '/' + eventId,
+		url: 'rest/event/' + eventId + '/' + login,
 		type: 'POST'
 	})
 	.done(done)
