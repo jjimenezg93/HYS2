@@ -71,7 +71,6 @@ public class EventDAO extends DAO {
 
 	public List<Event> listRecomended(String login, String userCity) throws DAOException {
 		int numEvents = 4;
-		System.out.println("userCity = " + userCity);
 		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap
 																			// devuelve
 																			// un
@@ -135,7 +134,6 @@ public class EventDAO extends DAO {
 							}
 						}
 					}
-					System.out.println(mapaCategorias.toString());
 					return events;
 
 				}

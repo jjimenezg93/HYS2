@@ -86,7 +86,7 @@ public class EventDAOUnitTest extends DatabaseQueryUnitTest {
 		final EventDAO eventDAO = new EventDAO();
 
 		assertEquals("Unexpected event data",
-			events, eventDAO.listRecomended("Pablo")
+			events, eventDAO.listRecomended("Pablo", "Vigo")
 		);
 	}
 	/*
