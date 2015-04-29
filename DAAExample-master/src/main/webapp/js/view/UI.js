@@ -1,21 +1,26 @@
 var userCity;
 function getUserGeolocation(){
-jQuery.ajax({
-	url : '//freegeoip.net/json/',
-	type : 'POST',
-	dataType : 'jsonp',
-	success : function(location) {
-		// example where I update content on the page.
-		jQuery('#city').html(location.city);
-		// jQuery('#zipcode').html(location.zipcode);	OTRA OPCION, USANDO RANGO DE CERCANIA
-		userCity = location.city;
-	}
-});
+	jQuery.ajax({
+		url : '//freegeoip.net/json/',
+		type : 'POST',
+		dataType : 'jsonp',
+		success : function(location) {
+			// example where I update content on the page.
+			jQuery('#city').html(location.city);
+			// jQuery('#zipcode').html(location.zipcode);	OTRA OPCION, USANDO RANGO DE CERCANIA
+			userCity = location.city;
+		}
+	});
 }
 
 function init(parent){
 	
+<<<<<<< HEAD
 	listEvent("Pablo",function(events){
+=======
+	listEvent("Maria",function(events){
+		
+>>>>>>> origin/master
 		insertRecommended(parent,events);
 		insertDetailedEvent(parent,events[1]);
 		slider();
