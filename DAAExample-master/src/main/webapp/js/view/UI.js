@@ -16,12 +16,10 @@ jQuery.ajax({
 function init(parent){
 	
 	listEvent("Pablo",function(events){
-		
 		insertRecommended(parent,events);
-		insertDetailedEvent(parent,events[0]);
-		
+		insertDetailedEvent(parent,events[1]);
+		slider();
 	},function(){},function(){});
-	
 	
 
 	
@@ -78,23 +76,47 @@ function insertDetailedEvent(parent,event) {
 }
 
 function insertRecommended(parent,events) {
-	hola = events[0].category;
-	parent.append('<div class="row">\
-            <div class="col-lg-12">\
-            <h2 class="page-header">Eventos recomendados</h2>\
-        </div>\
-        <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[0].image+'" alt="" onclick="modificarDetailed(\''+events[0].nameEvent+'\',\''+events[0].category+'\',\''+events[0].author+'\',\''+events[0].dateInit+'\',\''+events[0].place+'\',\''+events[0].image+'\',\''+events[0].description+'\')">\
-        </div>\
-        <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[1].image+'" alt="" onclick="modificarDetailed(\''+events[1].nameEvent+'\',\''+events[1].category+'\',\''+events[1].author+'\',\''+events[1].dateInit+'\',\''+events[1].place+'\',\''+events[1].image+'\',\''+events[1].description+'\');">\
-        </div>\
-        <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[2].image+'" alt="" onclick="modificarDetailed(\''+events[2].nameEvent+'\',\''+events[2].category+'\',\''+events[2].author+'\',\''+events[2].dateInit+'\',\''+events[2].place+'\',\''+events[2].image+'\',\''+events[2].description+'\');">\
-            </a>\
-        </div>\
-        <div class="col-md-3 col-sm-6">\
-                <img class="img-responsive img-portfolio img-hover" src="'+ events[3].image+'" alt="" onclick="modificarDetailed(\''+events[3].nameEvent+'\',\''+events[3].category+'\',\''+events[3].author+'\',\''+events[3].dateInit+'\',\''+events[3].place+'\',\''+events[3].image+'\',\''+events[3].description+'\');">\
-        </div>\
-    </div>')
+
+	cadenaHtml ='\
+		<div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 810px; height: 300px; background: #000; overflow: hidden; ">\
+		<!-- Loading Screen -->\
+			<div id="ContenedorEstilos" u="loading" style="position: absolute; top: 0px; left: 0px;">\
+	        	<div id="Estilos1" style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;\
+	            	background-color: #000000; top: 0px; left: 0px;width: 100%;height:100%;">\
+	        	</div>\
+	        	<div id="Estilos2" style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;\
+	            	top: 0px; left: 0px;width: 100%;height:100%;">\
+	        	</div>\
+			</div>\
+			<div id="contenedorDeEventos" u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 300px;\
+            overflow: hidden;">';
+		
+		
+	for (eve in events){
+	cadenaHtml+='	<div>\
+						<a id="event'+eve+'" u="image" onclick="modificarDetailed(\''+events[eve].nameEvent+'\',\''+events[eve].category+'\',\''+events[eve].author+'\',\''+events[eve].dateInit+'\',\''+events[eve].place+'\',\''+events[eve].image+'\',\''+events[eve].description+'\');">\
+						<img id="event'+eve+'" src="'+ events[eve].image+'" />\
+						</a>\
+                			<div id="event'+eve+'thumbcontainer" u="thumb">\
+			                    <img id="event'+eve+'image" class="i" src="'+ events[eve].image+'" />\
+			                    <div id="event'+eve+'event" class="t">'+events[eve].nameEvent +'</div>\
+			                    <div id="event'+eve+'category" class="c">'+events[eve].category +'</div>\
+			                </div>\
+                    </div>';
+				
+	};
+
+		
+	cadenaHtml+='</div>\
+		<div u="thumbnavigator" class="jssort11" style="left: 605px; top:0px;">\
+			<!-- Thumbnail Item Skin Begin -->\
+			<div u="slides" style="cursor: default;">\
+        		<div u="prototype" class="p" style="top: 0; left: 0;">\
+            		<div  u="thumbnailtemplate" class="tp">\
+					</div>\
+        		</div>\
+			</div>\
+		</div></div>';	
+	
+	parent.append(cadenaHtml);
 }
