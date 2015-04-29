@@ -54,10 +54,10 @@ public class EventResourceUnitTest {
 			new Event(1,"Nombre", new Timestamp(05464564654),new Timestamp(05464564654),new Timestamp(05464564654),"Descripcion","Categoria", "Ourense", "/img/prueba.jpg","Pablo")
 		);
 		
-		expect(daoMock.listRecomended("Pablo")).andReturn(events);
+		expect(daoMock.listRecomended("Pablo", "Vigo")).andReturn(events);
 		replay(daoMock);
 		
-		final Response response = resource.listRecomended("Pablo");
+		final Response response = resource.listRecomended("Pablo", "Vigo");
 		assertEquals(events, response.getEntity());
 		assertEquals(Status.OK, response.getStatusInfo());
 	}
