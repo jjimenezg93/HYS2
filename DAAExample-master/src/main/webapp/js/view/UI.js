@@ -1,5 +1,4 @@
-var userCity;
-function getUserGeolocation(){
+function getUserGeolocation(callback){
 	jQuery.ajax({
 		url : '//freegeoip.net/json/',
 		type : 'POST',
@@ -7,27 +6,23 @@ function getUserGeolocation(){
 		success : function(location) {
 			// example where I update content on the page.
 			jQuery('#city').html(location.city);
-			// jQuery('#zipcode').html(location.zipcode);	OTRA OPCION, USANDO RANGO DE CERCANIA
-			userCity = location.city;
+			// jQuery('#zipcode').html(location.zipcode); OTRA OPCION, USANDO
+			// RANGO DE CERCANIA
+			
+			callback(location.city);
 		}
 	});
 }
 
 function init(parent){
+	getUserGeolocation(function(userCity) {
+		listEvent("Pablo", userCity, function(events){
+			insertRecommended(parent,events);
+			insertDetailedEvent(parent,events[1]);
+			slider();
+		});
 	
-<<<<<<< HEAD
-	listEvent("Pablo",function(events){
-=======
-	listEvent("Maria",function(events){
-		
->>>>>>> origin/master
-		insertRecommended(parent,events);
-		insertDetailedEvent(parent,events[1]);
-		slider();
-	},function(){},function(){});
-	
-
-	
+	});
 }
 
 function modificarDetailed(eventName, category, author, dateInit, place, image, description){
@@ -46,13 +41,6 @@ function modificarDetailed(eventName, category, author, dateInit, place, image, 
 	
 	
 }
-
-function getGeolocation(parent){
-	/*parent.append('<div>' + document.write(geoip_city()) + '</div>'
-			)*/
-	
-}
-	
 
 function insertDetailedEvent(parent,event) {
 

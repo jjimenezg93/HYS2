@@ -36,10 +36,10 @@ public class EventResource {
 
 	//mcpaz y adri
 	@GET
-	@Path("/{login}")
-	public Response listRecomended(@PathParam("login") String login) {
+	@Path("/{login}/{userCity}")
+	public Response listRecomended(@PathParam("login") String login, @PathParam("userCity") String userCity) {
 		try {
-			return Response.ok(this.dao.listRecomended(login)).build();
+			return Response.ok(this.dao.listRecomended(login, userCity)).build();
 		} catch (DAOException e) {
 			LOG.log(Level.SEVERE, "Error listing Event", e);
 			return Response.serverError().entity(e.getMessage()).build();

@@ -69,8 +69,9 @@ public class EventDAO extends DAO {
 	 */
 	// mcpaz y adri
 
-	public List<Event> listRecomended(String login) throws DAOException {
+	public List<Event> listRecomended(String login, String userCity) throws DAOException {
 		int numEvents = 4;
+		System.out.println("userCity = " + userCity);
 		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap
 																			// devuelve
 																			// un
@@ -78,7 +79,7 @@ public class EventDAO extends DAO {
 																			// ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser, event where eventUser.id = event.id and eventUser.login = "
-					+ "'" + login + "'";
+					+ "'" + login + "'" + " GROUP BY event.category ORDER BY COUNT(1) DESC";
 
 			try (final PreparedStatement statement = conn
 					.prepareStatement(eventosUser)) {
@@ -107,7 +108,8 @@ public class EventDAO extends DAO {
 
 						while (iterator.hasNext()) {
 							String key = (String) iterator.next();
-							final String eventoRecomen = "SELECT * FROM event where category =  "
+							final String eventoRecomen = "SELECT * FROM event where event.place = "
+					+ "'" + userCity + "'" + " and category =  "
 									+ "'" + key + "'";
 
 							try (final PreparedStatement stat = conn
@@ -122,10 +124,10 @@ public class EventDAO extends DAO {
 												res.getTimestamp("dateInit"),
 												res.getTimestamp("dateFinal"),
 												res.getString("description"),
-												res.getString("category"), res
-														.getString("place"),
-												res.getString("image"), res
-														.getString("author")));
+												res.getString("category"),
+												res.getString("place"),
+												res.getString("image"),
+												res.getString("author")));
 
 									}
 
