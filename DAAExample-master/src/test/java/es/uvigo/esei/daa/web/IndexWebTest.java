@@ -13,11 +13,13 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.hamcrest.CoreMatchers.*;
 
 import es.uvigo.esei.daa.TestUtils;
 
@@ -67,9 +69,22 @@ public class IndexWebTest {
 		}
 	}
 
-	@Test
+	
 	public void testList() throws Exception {
 		verifyXpathCount("//img", 5);
+	}
+	
+	@Test
+	public void testListClick() throws Exception {
+		WebElement old = driver.findElement(By.name("eventname"));
+		WebElement second = driver.findElement(By.id("2"));
+		String s=old.getAttribute("value");
+		second.click();
+		waitForTextInElement(By.name("eventname"), "");
+		WebElement nuevo = driver.findElement(By.name("eventname"));
+		assertEquals(not(s), nuevo.getAttribute("value"));
+		
+		//System.out.println("Holaaaaaaa");
 	}
 /*
 	@Test
