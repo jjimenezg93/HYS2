@@ -18,7 +18,9 @@ function init(parent){
 		var user="Pablo";
 		listEvent(user, userCity, function(events){
 			insertRecommended(parent,events);
-			insertDetailedEvent(parent,events[1],user);
+
+			insertDetailedEvent(parent,events[3],user);
+
 			slider();
 		});
 	
