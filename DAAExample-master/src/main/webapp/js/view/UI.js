@@ -1,4 +1,4 @@
-function getUserGeolocation(callback){
+function getUserGeolocation(callback) {
 	jQuery.ajax({
 		url : '//freegeoip.net/json/',
 		type : 'POST',
@@ -8,37 +8,36 @@ function getUserGeolocation(callback){
 			jQuery('#city').html(location.city);
 			// jQuery('#zipcode').html(location.zipcode); OTRA OPCION, USANDO
 			// RANGO DE CERCANIA
-			
+
 			callback(location.city);
 		}
 	});
 }
-function init(parent){
+function init(parent) {
 	getUserGeolocation(function(userCity) {
-		var user="Pablo";
-		listEvent(user, userCity, function(events){
-			insertRecommended(parent,events);
+		var user = "Pablo";
+		listEvent(user, userCity, function(events) {
+			insertRecommended(parent, events);
 
-			insertDetailedEvent(parent,events[3],user);
+			insertDetailedEvent(parent, events[3], user);
 
 			slider();
 		});
-	
+
 	});
 }
 
-function insertar(user){
-	var documento= $("#detailedform");
-	eventid=documento.find('input[name="idEvento"]').val();
-	joinEvent(user,eventid);
-	
-	
-	
+function insertar(user) {
+	var documento = $("#detailedform");
+	eventid = documento.find('input[name="idEvento"]').val();
+	joinEvent(user, eventid);
+
 }
-function modificarDetailed(eventName, category, author, dateInit, place, image, description,idEvent){
-		
+function modificarDetailed(eventName, category, author, dateInit, place, image,
+		description, idEvent) {
+
 	var date = new Date(Number(dateInit)).toDateString();
-	var documento= $("#detailedform");
+	var documento = $("#detailedform");
 	documento.find('input[name="eventname"]').val(eventName);
 	documento.find('input[name="category"]').val(category);
 	documento.find('input[name="author"]').val(author);
@@ -48,46 +47,64 @@ function modificarDetailed(eventName, category, author, dateInit, place, image, 
 	document.getElementById('description').innerHTML = description;
 	document["eventImage"].src = image;
 
-	
-	
-	
 }
 
-function insertDetailedEvent(parent,event,user) {
+function insertDetailedEvent(parent, event, user) {
 
-	parent.append('<!-- Features Section -->\
+	parent
+			.append('<!-- Features Section -->\
         <div class="row" > \
-			<form id="' + "detailedform" + '">\
+			<form id="'
+					+ "detailedform"
+					+ '">\
             <div class="col-lg-12">\
-                <h2 class="page-header"><input type="text" name="eventname" value="'+event.nameEvent+'"/></h2>\
+                <h2 class="page-header"><input type="text" name="eventname" value="'
+					+ event.nameEvent
+					+ '"/></h2>\
             </div>\
            <div class="col-md-6">\
                 <ul>\
-					<li><strong>Categoría: </strong><input type="text" name="category" value="'+event.category+'"/></li>\
-					<li><strong>Creador: </strong><input type="text" name="author" value="'+event.author+'"/></li>\
-                    <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'+new Date(Number(event.dateInit)).toDateString()+'"/></li>\
-                    <li><strong>Lugar: </strong><input type="text" name="place" value="'+event.place+'"/></li>\
-                    <input type="hidden" name="idEvento"  value="'+event.id+'">\
+					<li><strong>Categoría: </strong><input type="text" name="category" value="'
+					+ event.category
+					+ '"/></li>\
+					<li><strong>Creador: </strong><input type="text" name="author" value="'
+					+ event.author
+					+ '"/></li>\
+                    <li><strong>Fecha de Inicio: </strong><input type="text" name="dateInit" value="'
+					+ new Date(Number(event.dateInit)).toDateString()
+					+ '"/></li>\
+                    <li><strong>Lugar: </strong><input type="text" name="place" value="'
+					+ event.place
+					+ '"/></li>\
+                    <input type="hidden" name="idEvento"  value="'
+					+ event.id
+					+ '">\
                 </ul>\
-                <p id="description">'+event.description+'</p>\
+                <p id="description">'
+					+ event.description
+					+ '</p>\
                 <div class ="col-md-4">\
                 </form>\
                 <center>\
-                	<button id ="btn-join" name="btn-join" onclick="insertar(\''+user+'\')">Apuntarse</button>\
+                	<button id ="btn-join" name="btn-join" onclick="insertar(\''
+					+ user
+					+ '\')">Apuntarse</button>\
                 </center>\
                 </div>\
             </div>\
             <div class="col-md-4 .col-md-offset-4">\
-                <img name="eventImage" class="img-responsive" src="'+event.image+'" alt="">\
+                <img name="eventImage" class="img-responsive" src="'
+					+ event.image
+					+ '" alt="">\
             </div>\
         </div>\
         <!-- /.row -->')
-        
+
 }
 
-function insertRecommended(parent,events) {
+function insertRecommended(parent, events) {
 
-	cadenaHtml ='\
+	cadenaHtml = '\
 		<div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 810px; height: 300px; background: #000; overflow: hidden; ">\
 		<!-- Loading Screen -->\
 			<div id="ContenedorEstilos" u="loading" style="position: absolute; top: 0px; left: 0px;">\
@@ -100,24 +117,59 @@ function insertRecommended(parent,events) {
 			</div>\
 			<div id="contenedorDeEventos" u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 300px;\
             overflow: hidden;">';
-		
-		
-	for (eve in events){
-	cadenaHtml+='	<div>\
-						<a id="event'+eve+'" u="image" onclick="modificarDetailed(\''+events[eve].nameEvent+'\',\''+events[eve].category+'\',\''+events[eve].author+'\',\''+events[eve].dateInit+'\',\''+events[eve].place+'\',\''+events[eve].image+'\',\''+events[eve].description+'\',\''+events[eve].id+'\');">\
-						<img id="event'+eve+'" src="'+ events[eve].image+'" />\
+
+	for (eve in events) {
+		cadenaHtml += '	<div>\
+						<a id="event'
+				+ eve
+				+ '" u="image" onclick="modificarDetailed(\''
+				+ events[eve].nameEvent
+				+ '\',\''
+				+ events[eve].category
+				+ '\',\''
+				+ events[eve].author
+				+ '\',\''
+				+ events[eve].dateInit
+				+ '\',\''
+				+ events[eve].place
+				+ '\',\''
+				+ events[eve].image
+				+ '\',\''
+				+ events[eve].description
+				+ '\',\''
+				+ events[eve].id
+				+ '\');">\
+						<img id="event'
+				+ eve
+				+ '" src="'
+				+ events[eve].image
+				+ '" />\
 						</a>\
-                			<div id="event'+eve+'thumbcontainer" u="thumb">\
-			                    <img id="event'+eve+'image" class="i" src="'+ events[eve].image+'" />\
-			                    <div id="event'+eve+'event" class="t">'+events[eve].nameEvent +'</div>\
-			                    <div id="event'+eve+'category" class="c">'+events[eve].category +'</div>\
+                			<div id="event'
+				+ eve
+				+ 'thumbcontainer" u="thumb">\
+			                    <img id="event'
+				+ eve
+				+ 'image" class="i" src="'
+				+ events[eve].image
+				+ '" />\
+			                    <div id="event'
+				+ eve
+				+ 'event" class="t">'
+				+ events[eve].nameEvent
+				+ '</div>\
+			                    <div id="event'
+				+ eve
+				+ 'category" class="c">'
+				+ events[eve].category
+				+ '</div>\
 			                </div>\
                     </div>';
-				
-	};
 
-		
-	cadenaHtml+='</div>\
+	}
+	;
+
+	cadenaHtml += '</div>\
 		<div u="thumbnavigator" class="jssort11" style="left: 605px; top:0px;">\
 			<!-- Thumbnail Item Skin Begin -->\
 			<div u="slides" style="cursor: default;">\
@@ -126,7 +178,7 @@ function insertRecommended(parent,events) {
 					</div>\
         		</div>\
 			</div>\
-		</div></div>';	
-	
+		</div></div>';
+
 	parent.append(cadenaHtml);
 }

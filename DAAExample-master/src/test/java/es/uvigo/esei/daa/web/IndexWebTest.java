@@ -18,7 +18,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import static org.hamcrest.CoreMatchers.*;
 
 import es.uvigo.esei.daa.TestUtils;
 
@@ -49,11 +48,9 @@ public class IndexWebTest {
 		driver.get(baseUrl);
 		driver.manage().addCookie(new Cookie("token", "bXJqYXRvOm1yamF0bw=="));
 		
-		// Driver will wait DEFAULT_WAIT_TIME if it doesn't find and element.
 		driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_TIME, TimeUnit.SECONDS);
 		
 		driver.get(baseUrl + "index.html");
-		//driver.findElement(By.id("people-list"));
 	}
 	
 
@@ -83,64 +80,10 @@ public class IndexWebTest {
 		WebElement nuevo = driver.findElement(By.name("eventname"));
 		assertNotEquals(s,nuevo.getAttribute("value"));
 
-		//System.out.println("Holaaaaaaa");
-	}
-/*
-	@Test
-	public void testAdd() throws Exception {
-		final String name = "Hola";
-		final String surname = "Mundo";
 		
-		driver.findElement(By.name("name")).clear();
-		driver.findElement(By.name("name")).sendKeys(name);
-		driver.findElement(By.name("surname")).clear();
-		driver.findElement(By.name("surname")).sendKeys(surname);
-		driver.findElement(By.id("btnSubmit")).click();
-		driver.findElement(By.xpath("//td[text()='Hola']"));
-		
-		assertEquals(name, 
-			driver.findElement(By.cssSelector("tr:last-child > td.name")).getText()
-		);
-		assertEquals(surname, 
-			driver.findElement(By.cssSelector("tr:last-child > td.surname")).getText()
-		);
 	}
 
-	@Test
-	public void testEdit() throws Exception {
-		final String name = "Xián";
-		final String surname = "Ximénez";
-		
-		final String trId = driver.findElement(By.xpath("//tr[last()]")).getAttribute("id");
-		driver.findElement(By.xpath("//tr[@id='" + trId + "']//a[text()='Edit']")).click();
-		driver.findElement(By.name("name")).clear();
-		driver.findElement(By.name("name")).sendKeys(name);
-		driver.findElement(By.name("surname")).clear();
-		driver.findElement(By.name("surname")).sendKeys(surname);
-		driver.findElement(By.id("btnSubmit")).click();
-		waitForTextInElement(By.name("name"), "");
-		waitForTextInElement(By.name("surname"), "");
-		
-		assertEquals(name, 
-			driver.findElement(By.xpath("//tr[@id='" + trId + "']/td[@class='name']")).getText()
-		);
-		assertEquals(surname, 
-			driver.findElement(By.xpath("//tr[@id='" + trId + "']/td[@class='surname']")).getText()
-		);
-	}
-
-	@Test
-	public void testDelete() throws Exception {
-		final String trId = driver.findElement(By.xpath("//tr[last()]")).getAttribute("id");
-		driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[last()]")).click();
-		driver.switchTo().alert().accept();
-		waitUntilNotFindElement(By.id(trId));
-	}
-	*/
-	private boolean waitUntilNotFindElement(By by) {
-	    return new WebDriverWait(driver, DEFAULT_WAIT_TIME)
-	    	.until(ExpectedConditions.invisibilityOfElementLocated(by));
-	}
+	
 	
 	private boolean waitForTextInElement(By by, String text) {
 	    return new WebDriverWait(driver, DEFAULT_WAIT_TIME)

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -277,11 +276,11 @@ public class EventDAO extends DAO {
 					return true;
 				}
 			} catch (SQLException e) {
-				LOG.log(Level.SEVERE, "Error añadiendo eventUser", e);
+				LOG.log(Level.SEVERE, "Error aï¿½adiendo eventUser", e);
 				throw new DAOException(e);
 			}
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Error añadiendo eventUser", e);
+			LOG.log(Level.SEVERE, "Error aï¿½adiendo eventUser", e);
 			throw new DAOException(e);
 		}
 	}
