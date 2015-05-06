@@ -97,6 +97,7 @@ function insertDetailedEvent(parent, event, user) {
 					+ event.image
 					+ '" alt="">\
             </div>\
+		<div class="col-md-1"></div>\
         </div>\
         <!-- /.row -->')
 
@@ -105,7 +106,7 @@ function insertDetailedEvent(parent, event, user) {
 function insertRecommended(parent, events) {
 
 	cadenaHtml = '\
-		<div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 810px; height: 300px; background: #000; overflow: hidden; ">\
+		<div id="slider1_container" style="margin-left: auto; margin-right: auto; position: relative; top: 0px; left: 0px; width: 810px; height: 300px; background: #000; overflow: hidden; ">\
 		<!-- Loading Screen -->\
 			<div id="ContenedorEstilos" u="loading" style="position: absolute; top: 0px; left: 0px;">\
 	        	<div id="Estilos1" style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;\
