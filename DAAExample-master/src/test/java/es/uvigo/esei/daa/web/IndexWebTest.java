@@ -1,9 +1,18 @@
 package es.uvigo.esei.daa.web;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+
+import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +29,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import es.uvigo.esei.daa.TestUtils;
+import es.uvigo.esei.daa.dao.DAOException;
 
 public class IndexWebTest {
 	private static final int DEFAULT_WAIT_TIME = 1;
@@ -71,16 +81,58 @@ public class IndexWebTest {
 	}
 	
 	@Test
-	public void testListClick() throws Exception {
+	public void sliderTest() throws Exception {
 		WebElement old = driver.findElement(By.name("eventname"));
 		String s=old.getAttribute("value");
+		WebElement thumbnail = driver.findElement(By.id("slider-2"));
+		thumbnail.click();
 		WebElement second = driver.findElement(By.id("contenedorDeEventos"));
 		second.click();
 		waitForTextInElement(By.name("eventname"), "");
 		WebElement nuevo = driver.findElement(By.name("eventname"));
-		assertNotEquals(s,nuevo.getAttribute("value"));
-
+		assertNotEquals(s,nuevo.getAttribute("value"));		
+	}
+	
+	@Test
+	public void apuntarEventoTest() throws Exception {
+		//Reuniendo informacion
+		String user="Pablo";
+		WebElement idEvento = driver.findElement(By.name("idEvento"));
+		int idEventoInt=Integer.parseInt(idEvento.getAttribute("value"));
 		
+		//Clicar en el boton de unirse
+		WebElement button = driver.findElement(By.id("btn-join"));
+		button.click();
+				
+		//Consulta base de datos
+		DataSource ds=TestUtils.accessOriginalDatabase();
+		
+		try (final Connection conn = ds.getConnection()) {
+		//Borrar de la bd
+			final String queryDelete = "DELETE FROM eventuser WHERE id=? login=?";
+			try (final PreparedStatement statement = conn
+					.prepareStatement(queryDelete)) {
+				statement.setInt(1, idEventoInt);
+				statement.setString(2, user);
+				
+				statement.executeQuery();
+			}
+		//Comprobar inserccion
+			final String queryCheck = "select * from eventuser where id=? and login=?";
+
+			try (final PreparedStatement statement = conn
+					.prepareStatement(queryCheck)) {
+				statement.setInt(1, idEventoInt);
+				statement.setString(2, user);
+				
+				ResultSet res=statement.executeQuery();
+				res.last();
+				assertEquals(res.getRow(), 1);
+			}
+			
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		}
 	}
 
 	

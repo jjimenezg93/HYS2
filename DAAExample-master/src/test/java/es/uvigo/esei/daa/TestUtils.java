@@ -7,7 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.ws.rs.core.Response;
@@ -103,5 +106,21 @@ public final class TestUtils {
 
 	public static void assertBadRequestStatus(final Response response) {
 		assertEquals("Unexpected status code", Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+	}
+	
+	
+	public static DataSource accessOriginalDatabase() {
+		Context initContext;
+		DataSource dS;
+		try {
+			initContext = new InitialContext();
+			dS = (DataSource) initContext.lookup(
+				System.getProperty("db.jndi", "java:/comp/env/jdbc/daaexample")
+			);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return dS;
 	}
 }
