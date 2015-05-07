@@ -50,32 +50,10 @@ public class EventDAO extends DAO {
 		}
 	}
 
-	/*
-	 * public List<Event> list() throws DAOException { try (final Connection
-	 * conn = this.getConnection()) { final String query =
-	 * "SELECT * FROM event";
-	 * 
-	 * try (final PreparedStatement statement = conn.prepareStatement(query)) {
-	 * try (final ResultSet result = statement.executeQuery()) { final
-	 * List<Event> events = new LinkedList<>(); while (result.next()) {
-	 * events.add(new Event( result.getInt("id"), result.getString("nameEvent"),
-	 * result.getTimestamp("dateCreate"), result.getTimestamp("dateInit"),
-	 * result.getTimestamp("dateFinal"), result.getString("description"),
-	 * result.getString("category") )); }
-	 * 
-	 * return events; } } } catch (SQLException e) { LOG.log(Level.SEVERE,
-	 * "Error listing events", e); throw new DAOException(e); } }
-	 */
-	// mcpaz y adri
-
 	public List<Event> listRecomended(String login, String userCity)
 			throws DAOException {
 		int numEvents = 4;
-		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap
-																			// devuelve
-																			// un
-																			// mapa
-																			// ordenado
+		final SortedMap<String, Integer> mapaCategorias = new TreeMap(); // sortedMap devuelve un mapa ordenado
 		try (final Connection conn = this.getConnection()) {
 			final String eventosUser = "SELECT event.category FROM eventUser, event where eventUser.id = event.id and eventUser.login = "
 					+ "'"
@@ -86,9 +64,7 @@ public class EventDAO extends DAO {
 			try (final PreparedStatement statement = conn
 					.prepareStatement(eventosUser)) {
 				try (final ResultSet pastEventsUser = statement.executeQuery()) {
-					while (pastEventsUser.next()) {// aqui creo que estamos
-													// contando las
-						// veces que se repite una categoria
+					while (pastEventsUser.next()) {
 
 						if (!mapaCategorias.containsKey(pastEventsUser
 								.getString("category"))) {

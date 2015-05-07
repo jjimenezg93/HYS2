@@ -23,8 +23,8 @@ public abstract class DatabaseQueryUnitTest {
 	protected DataSource datasource;
 	protected Connection connection;
 	protected PreparedStatement statement;
+	protected PreparedStatement statement2;
 	protected ResultSet result;
-	protected ResultSet res;
 	
 	protected boolean verify;
 	
@@ -39,19 +39,18 @@ public abstract class DatabaseQueryUnitTest {
 		datasource = createMock(DataSource.class);
 		connection = createMock(Connection.class);
 		statement = createNiceMock(PreparedStatement.class);
+		statement2 = createNiceMock(PreparedStatement.class);
 		result = createMock(ResultSet.class);
-		res = createMock(ResultSet.class);
 		
 		expect(datasource.getConnection())
 			.andReturn(connection);
 		expect(connection.prepareStatement(anyString()))
 			.andReturn(statement);
+		expect(connection.prepareStatement(anyString()))
+		.andReturn(statement);
 		expect(statement.executeQuery())
 			.andReturn(result)
 			.anyTimes();
-		expect(statement.executeQuery())
-		.andReturn(res)
-		.anyTimes();// executeQuery is optional;
 		
 		statement.close();
 		connection.close();
@@ -60,13 +59,13 @@ public abstract class DatabaseQueryUnitTest {
 	}
 	
 	protected void resetAll() {
-		reset(result, statement, connection, datasource,res);
+		reset(result, statement, connection, datasource);
 		verify = false;
 	}
 	
 	protected void replayAll()
 	throws Exception {
-		replay(result, statement, connection, datasource,res);
+		replay(result, statement, connection, datasource);
 		
 		TestUtils.createFakeContext(datasource);
 	}

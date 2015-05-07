@@ -61,13 +61,15 @@ public class EventDAOUnitTest extends DatabaseQueryUnitTest {
 	@Test
 	public void testlistRecomended() throws Exception {
 		final List<Event> events = Arrays.asList(
-				new Event(3,"Pachanga en Ourense", new Timestamp(1439483400),new Timestamp(1442161800),new Timestamp(1442169000),"Partido de futbol entre amigos en el campo del campus de ourense","Deportes", "Ourense", "img/prueba3.jpg","Pablo")
-				//new Event(1,"Fiesta de Disfraces", new Timestamp(1436959800),new Timestamp(1439638200),new Timestamp(1439645400),"Fiesta de disfraces para celebrar el inicio de la primavera","Fiesta","img/prueba1.jpg","Pablo"),
-				//new Event(4,"Parrillada en Vigo", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Cada uno debe pagar 5 euros para comprar comida y bebida","Fiesta","img/prueba4.jpg","Pablo"),
-				//new Event(2,"Club de lectura", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Hablaremos sobre algun libro, uno diferente cada semana","Literatura","img/prueba2.jpg","Maria")
+				new Event(3,"Pachanga en Ourense", new Timestamp(1439483400),new Timestamp(1442161800),new Timestamp(1442169000),"Partido de futbol entre amigos en el campo del campus de ourense","Fiesta", "Ourense", "img/prueba3.jpg","Pablo"),
+				new Event(1,"Fiesta de Disfraces", new Timestamp(1436959800),new Timestamp(1439638200),new Timestamp(1439645400),"Fiesta de disfraces para celebrar el inicio de la primavera","Fiesta", "Ourense", "img/prueba1.jpg","Pablo"),
+				new Event(4,"Parrillada en Vigo", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Cada uno debe pagar 5 euros para comprar comida y bebida","Fiesta", "Ourense","img/prueba4.jpg","Pablo"),
+				new Event(2,"Club de lectura", new Timestamp(1433341800),new Timestamp(1433341800),new Timestamp(1434385800),"Hablaremos sobre algun libro, uno diferente cada semana","Fiesta", "Ourense","img/prueba2.jpg","Pablo")
 			);
-		
+
 		for (Event event : events) {
+			expect(result.next()).andReturn(true);
+			expect(result.next()).andReturn(false);
 			expect(result.next()).andReturn(true);
 			expect(result.getInt("id")).andReturn(event.getId());
 			expect(result.getString("nameEvent")).andReturn(event.getNameEvent());
@@ -75,18 +77,20 @@ public class EventDAOUnitTest extends DatabaseQueryUnitTest {
 			expect(result.getTimestamp("dateInit")).andReturn(event.getDateInit());
 			expect(result.getTimestamp("dateFinal")).andReturn(event.getDateFinal());
 			expect(result.getString("description")).andReturn(event.getDescription());
-			expect(result.getString("category")).andReturn("Fiesta");
+			expect(result.getString("category")).andReturn("Fiesta").anyTimes();
+			expect(result.getString("place")).andReturn(event.getPlace());
 			expect(result.getString("image")).andReturn(event.getImage());
 			expect(result.getString("author")).andReturn(event.getAuthor());
 		}
+			
 		expect(result.next()).andReturn(false);
 		result.close();
-		
+		result.close();
 		replayAll();
 		final EventDAO eventDAO = new EventDAO();
 
 		assertEquals("Unexpected event data",
-			events, eventDAO.listRecomended("Pablo", "Vigo")
+			events, eventDAO.listRecomended("Pablo", "Ourense")
 		);
 	}
 	/*
