@@ -33,6 +33,7 @@ function insertar(user) {
 	joinEvent(user, eventid);
 
 }
+
 function modificarDetailed(eventName, category, author, dateInit, place, image,
 		description, idEvent) {
 
